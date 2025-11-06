@@ -7,6 +7,14 @@ import Navbar from './components/navbar'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import {BrowserRouter, Route, Routes} from "react-router-dom"
+import Cart from './pages/shoppingCart'
+import Iphone from './pages/shoppingPages/iphone'
+import GamingLaptop from './pages/shoppingPages/gamingLaptop'
+import SmartWatch from './pages/shoppingPages/smartWatch'
+import Monitor from './pages/shoppingPages/monitor'
+import PowerBank from './pages/shoppingPages/powerBank'
+import EyeGlasses from './pages/shoppingPages/eyeGlasses'
+import WinterCollection from './pages/shoppingPages/winterCollection'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +26,14 @@ function App() {
    <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/contact' element={<Contact/>}/>
+    <Route path='/cart' element={<Cart/>}/>
+    <Route path='/iphone' element={<Iphone/>}/>
+    <Route path='/gamingLaptop' element={<GamingLaptop/>}/>
+    <Route path='/smartwatch' element={<SmartWatch/>}/>
+    <Route path='/monitor' element={<Monitor/>}/>
+    <Route path='/powerbank' element={<PowerBank/>}/>
+    <Route path='/eyeglasses' element={<EyeGlasses/>}/>
+    <Route path='/wintercollection' element={<WinterCollection/>}/>
    </Routes>
    {/* <Footer/> */}
    </BrowserRouter>

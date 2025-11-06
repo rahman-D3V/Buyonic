@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Spectacles = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-center h-[80vh] bg-[#f9f8f6] px-8 md:px-20">
@@ -24,7 +28,7 @@ const Spectacles = () => {
             crafted for comfort <br />
             and style.
           </h1>
-          <button className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition">
+          <button onClick={()=> navigate("eyeglasses")} className="mt-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition">
             Shop Now
           </button>
         </div>

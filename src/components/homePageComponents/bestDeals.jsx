@@ -1,7 +1,10 @@
 import React from "react";
 import { bestDeals } from "../../data";
+import { useNavigate } from "react-router-dom";
 
 const BestDeals = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="p-6 bg-white mt-3">
@@ -44,7 +47,10 @@ const BestDeals = () => {
               </div>
 
               {/* Button */}
-              <button className="mt-3 w-full border border-gray-300 rounded-full py-2 text-sm font-medium text-gray-700 hover:bg-black hover:text-white transition-all cursor-pointer">
+              <button
+                className="mt-3 w-full border border-gray-300 rounded-full py-2 text-sm font-medium text-gray-700 hover:bg-black hover:text-white transition-all cursor-pointer"
+                onClick={() => navigate(`/${item.url}`)}
+              >
                 View Products
               </button>
             </div>

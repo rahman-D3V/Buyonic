@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const WinterSection = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <div className="relative mb-20">
@@ -36,16 +40,16 @@ const WinterSection = () => {
             </p>
 
             {/* CTA */}
-            <a
+            <button onClick={() => navigate("/wintercollection")}
               href="#"
               className="mt-4 inline-flex items-center justify-center rounded-full
                    border border-white/40 bg-white/90 text-black
                    px-5 py-2 text-sm font-semibold transition-all
                    hover:bg-black hover:text-white hover:border-black
-                   focus:outline-none focus:ring-2 focus:ring-white/60"
+                   focus:outline-none focus:ring-2 focus:ring-white/60 cursor-pointer"
             >
               Explore now
-            </a>
+            </button>
           </div>
         </div>
       </div>
