@@ -66,7 +66,7 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Email Field */}
+              
               <div>
                 <label
                   htmlFor="email"
@@ -105,7 +105,7 @@ const Contact = () => {
                 ></textarea>
               </div>
 
-              {/* Submit Button */}
+             
               <button
                 type="submit"
                 className="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"

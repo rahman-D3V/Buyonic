@@ -144,7 +144,7 @@ export const iphoneData = [
     ratingCount: 7.8,
     deliveryEta: "Mon, 24 Nov",
     color: "x",
-    storage: "128",
+    storage: "128 GB",
   },
   {
     id: "2",
@@ -157,7 +157,7 @@ export const iphoneData = [
     ratingCount: 12.8,
     deliveryEta: "Tue, 16 Nov",
     color: "Blue",
-    storage: "128",
+    storage: "128 GB",
   },
   {
     id: "3",
@@ -170,7 +170,7 @@ export const iphoneData = [
     ratingCount: 5.4,
     deliveryEta: "Fri, 27 Nov",
     color: "x",
-    storage: "256",
+    storage: "256 GB",
   },
   {
     id: "4",
@@ -183,7 +183,7 @@ export const iphoneData = [
     ratingCount: 13.7,
     deliveryEta: "Sun, 12 Nov",
     color: "x",
-    storage: "128",
+    storage: "128 GB",
   },
   {
     id: "5",
@@ -196,7 +196,7 @@ export const iphoneData = [
     ratingCount: 6.9,
     deliveryEta: "Mon, 24 Nov",
     color: "Black",
-    storage: "512",
+    storage: "512 GB",
   },
   {
     id: "6",
@@ -209,7 +209,7 @@ export const iphoneData = [
     ratingCount: 13.7,
     deliveryEta: "Mon, 24 Nov",
     color: "x",
-    storage: "128",
+    storage: "128 GB",
   },
   {
     id: "7",
@@ -222,7 +222,7 @@ export const iphoneData = [
     ratingCount: 26.7,
     deliveryEta: "Wed, 22 Nov",
     color: "Blue",
-    storage: "256",
+    storage: "256 GB",
   },
   {
     id: "8",
@@ -235,7 +235,7 @@ export const iphoneData = [
     ratingCount: 12.5,
     deliveryEta: "Sun, 29 Nov",
     color: "Blue",
-    storage: "256",
+    storage: "256 GB",
   },
   {
     id: "9",
@@ -248,14 +248,15 @@ export const iphoneData = [
     ratingCount: 2.5,
     deliveryEta: "Sat, 29 Nov",
     color: "Black",
-    storage: "512",
+    storage: "512 GB",
   },
 ];
 
 export const laptopsData = [
   {
     id: "1",
-    title: "HP Victus 15 Intel Core i5 12th Gen 12450H - (8 GB/512 GB SSD/Windows 11 Home) ",
+    title:
+      "HP Victus 15 Intel Core i5 12th Gen 12450H - (8 GB/512 GB SSD/Windows 11 Home) ",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/j/b/e/-original-imahcd9ja2nvd4jv.jpeg?",
     price: 58599,
@@ -265,12 +266,13 @@ export const laptopsData = [
     deliveryEta: "Mon, 29 Nov",
     company: "HP",
     gen: "i5",
-    size: "15.6",
+    size: "15.6 inch",
     processor: "Intel",
   },
   {
     id: "2",
-    title: "Acer Predator Neo Intel Core i7 13th Gen 13700HX - (16 GB/512 GB SSD/Windows 11 Home)",
+    title:
+      "Acer Predator Neo Intel Core i7 13th Gen 13700HX - (16 GB/512 GB SSD/Windows 11 Home)",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/m/z/c/-original-imahcd9cex9mbznp.jpeg",
     price: 102099,
@@ -285,7 +287,8 @@ export const laptopsData = [
   },
   {
     id: "3",
-    title: "Acer Nitro V AMD Ryzen 5 Hexa Core 6600H - (16 GB/512 GB SSD/Windows 11 Home)",
+    title:
+      "Acer Nitro V AMD Ryzen 5 Hexa Core 6600H - (16 GB/512 GB SSD/Windows 11 Home)",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/s/l/3/-original-imahgfdyghgfets8.jpeg",
     price: 61990,
@@ -300,7 +303,8 @@ export const laptopsData = [
   },
   {
     id: "4",
-    title: "ASUS Vivobook Go 15 OLED, with Backlit Keyboard, AMD Ryzen 3 Quad Core 7320U ",
+    title:
+      "ASUS Vivobook Go 15 OLED, with Backlit Keyboard, AMD Ryzen 3 Quad Core 7320U ",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/x/u/b/-original-imahgfdfrdjmhgws.jpeg",
     price: 40990,
@@ -310,12 +314,13 @@ export const laptopsData = [
     deliveryEta: "Sun,21 Nov",
     company: "ASUS",
     gen: "X",
-    size: "15.6",
+    size: "15.6 inch",
     processor: "AMD Ryzen",
   },
   {
     id: "5",
-    title: "HP Victus AMD Ryzen 5 Hexa Core 5600H - (16 GB/512 GB SSD/Windows 11 Home)",
+    title:
+      "HP Victus AMD Ryzen 5 Hexa Core 5600H - (16 GB/512 GB SSD/Windows 11 Home)",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/r/w/y/-original-imahcd9hkkqxzcs6.jpeg",
     price: 55399,
@@ -325,12 +330,13 @@ export const laptopsData = [
     deliveryEta: "Wed, 20 Nov",
     company: "HP",
     gen: "X",
-    size: "15.6",
+    size: "15.6 inch",
     processor: "AMD Ryzen",
   },
   {
     id: "6",
-    title: "MSI Thin A15 AMD Ryzen 7 Octa Core 7735HS - (16 GB/1 TB SSD/Windows 11 Home)",
+    title:
+      "MSI Thin A15  Intel Core i7 13th Gen 13700HX - (16 GB/1 TB SSD/Windows 11 Home)",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/o/j/q/-original-imahgfdyczjhdyt4.jpeg",
     price: 65999,
@@ -348,7 +354,8 @@ export const laptopsData = [
 export const watchData = [
   {
     id: "1",
-    title: "Riva W9 ultra 2 Ultra Big Display Bluetooth with 100+ Sports Mode, IP68",
+    title:
+      "Riva W9 ultra 2 Ultra Big Display Bluetooth with 100+ Sports Mode, IP68",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/h/d/i/49-w92-ultra2-smartwatch-sw142-android-ios-yaaristyle-yes-original-imahfw8gpt97b89d.jpeg",
     price: 949,
@@ -356,7 +363,7 @@ export const watchData = [
     rating: 4.1,
     ratingCount: 2.6,
     deliveryEta: "Sun, 30 Nov",
-    gender: "male",
+    gender: "Male",
     shape: "square",
   },
   {
@@ -369,8 +376,8 @@ export const watchData = [
     rating: 4.4,
     ratingCount: 35.7,
     deliveryEta: "Tomorrow",
-    gender: "male",
-    shape: "round",
+    gender: "Male",
+    shape: "Round",
   },
   {
     id: "3",
@@ -383,8 +390,8 @@ export const watchData = [
     rating: 3.8,
     ratingCount: 25.4,
     deliveryEta: "Fri, 21 Nov",
-    gender: "female",
-    shape: "round",
+    gender: "Female",
+    shape: "Round",
   },
   {
     id: "4",
@@ -397,7 +404,7 @@ export const watchData = [
     rating: 4.1,
     ratingCount: 2.8,
     deliveryEta: "Thu, 20 Nov",
-    gender: "female",
+    gender: "Female",
     shape: "square",
   },
   {
@@ -411,7 +418,7 @@ export const watchData = [
     rating: 4.9,
     ratingCount: 1.2,
     deliveryEta: "Tomorrow",
-    gender: "male",
+    gender: "Male",
     shape: "square",
   },
   {
@@ -425,7 +432,7 @@ export const watchData = [
     rating: 4.7,
     ratingCount: 5.6,
     deliveryEta: "Sun, 22 Dec",
-    gender: "male",
+    gender: "Male",
     shape: "square",
   },
 ];
@@ -470,7 +477,7 @@ export const monitorData = [
     rating: 3.5,
     ratingCount: 11.9,
     deliveryEta: "Mon, 24 Dec",
-    PanelType: "Led",
+    PanelType: "LED",
     SuitableFor: "Home and Office",
   },
   {
@@ -485,7 +492,7 @@ export const monitorData = [
     ratingCount: 11.9,
     deliveryEta: "Mon, 24 Dec",
     PanelType: "IPS Panel",
-    SuitableFor: "Home and Office",
+    SuitableFor: "Home & Office",
   },
   {
     id: "5",

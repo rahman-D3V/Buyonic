@@ -16,7 +16,6 @@ const HeroSection = ({}) => {
 
         <div className="absolute inset-0 bg-linear-to-r from-slate-950/80 via-slate-900/40 to-transparent" />
 
-        {/* Content */}
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-8 flex items-center">
           <div className="max-w-xl">
             <span className="inline-block text-xs font-medium tracking-widest text-white/80 uppercase">

@@ -8,7 +8,7 @@ const Spectacles = () => {
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-center h-[80vh] bg-[#f9f8f6] px-8 md:px-20">
-        {/* Left: Video */}
+        {/* Left*/}
         <div className="md:w-1/2 w-full flex justify-center mb-8 md:mb-0">
           <video
             src="https://img.warbyparker.com/AIR_ASSETS/0b0564e73edc838222397421cbf3fa38a6e41d08e07f0921160ceff05f435285.mp4"
@@ -20,7 +20,7 @@ const Spectacles = () => {
           />
         </div>
 
-        {/* Right: Text content */}
+        {/* Right */}
         <div className="md:w-1/2 w-full text-center md:text-left md:pl-16">
           <h1 className="text-4xl md:text-5xl font-semibold leading-snug text-gray-900">
             Explore the{" "}

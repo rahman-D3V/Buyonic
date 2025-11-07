@@ -1,57 +1,23 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
-import { iphoneData, laptopsData, watchData } from "../../data";
+import {watchData} from "../../data";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
-const PRODUCTS = [
-  {
-    id: "ip15-128-black",
-    title: "Apple iPhone 15 (128 GB) - Black",
-    image:
-      "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/v/f/u/-original-imahgbazegktpgqw.jpeg?q=70",
-    price: 51299,
-    mrp: 69990,
-    rating: 2.8,
-    ratingCount: 7800,
-    deliveryEta: "Mon, 10 Nov",
-  },
-  {
-    id: "ip15-256-blue",
-    title: "Apple iPhone 15 (256 GB) - Blue",
-    image:
-      "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/a/f/e/-original-imagtc6fgehhe3ad.jpeg?q=70",
-    price: 62999,
-    mrp: 79990,
-    rating: 4.6,
-    ratingCount: 11200,
-    deliveryEta: "Tue, 11 Nov",
-  },
-  {
-    id: "ip14-128-starlight",
-    title: "Apple iPhone 14 (128 GB) - Starlight",
-    image:
-      "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/4/o/-original-imaghxcp6gqjzzsz.jpeg?q=70",
-    price: 48999,
-    mrp: 69900,
-    rating: 4.4,
-    ratingCount: 25600,
-    deliveryEta: "Tomorrow",
-  },
-];
+
 
 export default function SmartWatch() {
-  // const [sort, setSort] = useState("relevance");
 
-  // const sortedProducts = useMemo(() => {
-  //   const copy = [...PRODUCTS];
-  //   if (sort === "price-asc") copy.sort((a, b) => a.price - b.price);
-  //   if (sort === "price-desc") copy.sort((a, b) => b.price - a.price);
-  //   if (sort === "rating") copy.sort((a, b) => b.rating - a.rating);
-  //   return copy;
-  // }, [sort]);
+  const [instantFilter, setInstantFilter] = useState(null);
+  
+    const filteredProducts = useMemo(() => {
+      if (!instantFilter) return watchData;
+      return watchData.filter(
+        (item) => item.gender === instantFilter || item.shape === instantFilter
+      );
+    }, [instantFilter]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -86,20 +52,37 @@ export default function SmartWatch() {
         </div>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-2">
-        {["Male", "Female", "Round"].map((chip) => (
-          <span
-            key={chip}
-            className="rounded-full border px-3 py-1 text-sm text-gray-700"
+      <div className="mb-6 flex flex-wrap gap-2 items-center">
+        {["Male", "Female", "Round"].map((chip) => {
+          const active = chip === instantFilter;
+          return (
+            <button
+              key={chip}
+              onClick={() => setInstantFilter(chip)}
+              className={`rounded-full px-3 py-1 text-sm cursor-pointer border transition
+          ${
+            active
+              ? "bg-black text-white border-black"
+              : "text-gray-700 hover:border-black hover:text-black"
+          }`}
+            >
+              {chip}
+            </button>
+          );
+        })}
+        {instantFilter && (
+          <button
+            onClick={() => setInstantFilter(null)}
+            className="rounded-full px-2.5 py-0.5 text-xs cursor-pointer border text-gray-500 hover:bg-gray-100 transition"
           >
-            {chip}
-          </span>
-        ))}
+            Reset ✕
+          </button>
+        )}
       </div>
 
       {/* Products grid */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {watchData.map((p) => (
+        {filteredProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>

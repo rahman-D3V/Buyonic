@@ -27,12 +27,10 @@ const BestDeals = () => {
                 />
               </div>
 
-              {/* Product Name */}
               <h2 className="mt-3 text-center text-sm font-semibold text-gray-800 line-clamp-2">
                 {item.name}
               </h2>
 
-              {/* Price Line */}
               <p className="mt-1 text-center text-[11px] text-gray-500">
                 *best price starts from
               </p>
@@ -46,7 +44,6 @@ const BestDeals = () => {
                 </span>
               </div>
 
-              {/* Button */}
               <button
                 className="mt-3 w-full border border-gray-300 rounded-full py-2 text-sm font-medium text-gray-700 hover:bg-black hover:text-white transition-all cursor-pointer"
                 onClick={() => navigate(`/${item.url}`)}
