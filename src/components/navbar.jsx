@@ -3,6 +3,15 @@ import SRCH from "../assets/SRCH.png";
 import { FaShopify } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { Router, useNavigate } from "react-router-dom";
+import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
+
+const placeholders = [
+  "Search for products…",
+  "What are you looking for today?",
+  "Explore top deals and new arrivals",
+  "Find your next favorite product",
+  "Type to discover trending items",
+];
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -24,18 +33,23 @@ const Navbar = () => {
           {/* Search Bar */}
           <div className="flex-1 max-w-2xl mx-12">
             <div className="relative">
-              <input
+              {/* <input
                 type="text"
                 placeholder="Search for products..."
                 className="w-full px-6 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder-gray-400 text-sm border border-gray-200 outline-none focus:bg-white focus:border-slate-400 focus:ring-2 focus:ring-slate-200 transition-all duration-300"
-              />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-600 hover:bg-slate-700 p-2.5 rounded-lg transition-all duration-300">
+              /> */}
+              <PlaceholdersAndVanishInput
+        placeholders={placeholders}
+        // onChange={handleChange}
+        // onSubmit={onSubmit}
+      />
+              {/* <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-600 hover:bg-slate-700 p-2.5 rounded-lg transition-all duration-300">
                 <img
                   src={SRCH}
                   className="h-4 w-4 brightness-0 invert"
                   alt="Search"
                 />
-              </button>
+              </button> */}
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ColourfulText } from "../ui/colourful-text";
 
 const Spectacles = () => {
 
@@ -24,11 +25,11 @@ const Spectacles = () => {
         <div className="md:w-1/2 w-full text-center md:text-left md:pl-16">
           <h1 className="text-4xl md:text-5xl font-semibold leading-snug text-gray-900">
             Explore the{" "}
-            <span className="italic font-serif font-light">latest</span> eyewear
+            <span className="font-bold"><ColourfulText text="Latest" /></span> eyewear
             crafted for comfort <br />
             and style.
           </h1>
-          <button onClick={()=> navigate("eyeglasses")} className="mt-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition">
+          <button onClick={()=> navigate("eyeglasses")} className="mt-8 cursor-pointer bg-slate-600 hover:bg-slate-700 text-white px-6 py-3 rounded-full font-medium transition">
             Shop Now
           </button>
         </div>

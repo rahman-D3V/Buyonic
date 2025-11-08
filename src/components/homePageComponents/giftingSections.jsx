@@ -29,7 +29,7 @@ const GiftingSections = () => {
                   alt={item.name}
                   className="w-full h-full object-cover absolute top-0 left-0 hidden group-hover:block"
                 />
-                <button className="hidden group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-black text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]">
+                <button className="hidden group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]">
                   ADD TO BAG
                 </button>
               </div>

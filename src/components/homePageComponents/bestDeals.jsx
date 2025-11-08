@@ -1,6 +1,9 @@
 import React from "react";
 import { bestDeals } from "../../data";
 import { useNavigate } from "react-router-dom";
+import { ContainerTextFlip } from "../ui/container-text-flip";
+import { FlipWords } from "../ui/flip-words";
+
 
 const BestDeals = () => {
   const navigate = useNavigate();
@@ -9,7 +12,7 @@ const BestDeals = () => {
     <>
       <div className="p-6 bg-white mt-3">
         <h1 className="text-2xl font-semibold mb-6 ml-4">
-          Best deals on Electronics
+          Best deals on<span className="text-black"><FlipWords words={["iPhone","Gaming Laptop","smart watch","Monitor","Power Banks"]} /></span>
         </h1>
 
         <div className="flex flex-wrap justify-between gap-6">

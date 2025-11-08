@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
 import { powerBankData } from "../../data";
+import { EncryptedText } from "../../components/ui/encrypted-text";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
@@ -113,7 +114,14 @@ function ProductCard({ product }) {
       </div>
 
       <div className="mt-2 flex items-baseline gap-2">
-        <span className="text-lg font-semibold">{currency(price)}</span>
+        <span className="text-lg font-semibold">
+          <EncryptedText  
+            text={currency(price)}
+            encryptedClassName="text-neutral-500"
+            revealedClassName="text-black"
+            revealDelayMs={75}
+          />
+        </span>
         <span className="text-sm text-gray-500 line-through">
           {currency(mrp)}
         </span>

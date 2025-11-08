@@ -15,6 +15,7 @@ import Monitor from './pages/shoppingPages/monitor'
 import PowerBank from './pages/shoppingPages/powerBank'
 import EyeGlasses from './pages/shoppingPages/eyeGlasses'
 import WinterCollection from './pages/shoppingPages/winterCollection'
+import { ColourfulTextDemo } from './pages/shoppingPages/TestPage'
 
 function App() {
   const [count, setCount] = useState(0)
