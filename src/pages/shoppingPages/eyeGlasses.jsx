@@ -7,11 +7,24 @@ const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
 export default function EyeGlasses() {
+  const [sort, setSort] = useState("");
 
+  // Get the updated product list after sorting
+  const filteredProducts = useMemo(() => {
+    let copy = structuredClone(eyeglassesData);
 
+    if (sort === "low-high") {
+      copy.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-low") {
+      copy.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating") {
+      copy.sort((a, b) => b.rating - a.rating);
+    }
+
+    return copy;
+  }, [sort]);
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      
       <nav className="mb-5 flex items-center text-sm text-gray-600">
         <a href="/" className="hover:underline">
           Home
@@ -26,17 +39,27 @@ export default function EyeGlasses() {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => setSort("relevance")}
             className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
           >
             <FiSliders /> Relevance
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("low-high")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · Low to High
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("high-low")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · High to Low
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("rating")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Customer Rating
           </button>
         </div>
@@ -44,7 +67,7 @@ export default function EyeGlasses() {
 
       {/* Products  */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {eyeglassesData.map((p) => (
+        {filteredProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
@@ -68,14 +91,12 @@ function ProductCard({ product }) {
   return (
     <div className="group rounded-2xl border bg-white p-4 shadow-sm transition hover:shadow-md">
       <div className="relative mb-3">
-        
         <img
           src={image1}
           alt={title}
           className="mx-auto h-55 w-55 object-contain transition group-hover:opacity-0"
         />
 
-       
         <img
           src={image2}
           alt={title}

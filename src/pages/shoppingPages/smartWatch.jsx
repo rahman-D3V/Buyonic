@@ -1,23 +1,35 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
-import {watchData} from "../../data";
+import { FiChevronRight, FiSliders } from "react-icons/fi";
+import { watchData } from "../../data";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
-
-
 export default function SmartWatch() {
-
   const [instantFilter, setInstantFilter] = useState(null);
-  
-    const filteredProducts = useMemo(() => {
-      if (!instantFilter) return watchData;
-      return watchData.filter(
+  const [sort, setSort] = useState("");
+
+  // Get the updated product list after filtering and sorting
+  const filteredProducts = useMemo(() => {
+    let copy = structuredClone(watchData);
+
+    if (instantFilter) {
+      copy = copy.filter(
         (item) => item.gender === instantFilter || item.shape === instantFilter
       );
-    }, [instantFilter]);
+    }
+
+    if (sort === "low-high") {
+      copy.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-low") {
+      copy.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating") {
+      copy.sort((a, b) => b.rating - a.rating);
+    }
+
+    return copy;
+  }, [instantFilter, sort]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -36,17 +48,27 @@ export default function SmartWatch() {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => setSort("relevance")}
             className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
           >
             <FiSliders /> Relevance
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("low-high")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · Low to High
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("high-low")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · High to Low
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("rating")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Customer Rating
           </button>
         </div>
@@ -91,7 +113,8 @@ export default function SmartWatch() {
 }
 
 function ProductCard({ product }) {
-  const { title, image, price, mrp, rating, ratingCount, deliveryEta } = product;
+  const { title, image, price, mrp, rating, ratingCount, deliveryEta } =
+    product;
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
   return (
@@ -121,19 +144,19 @@ function ProductCard({ product }) {
 
       <div className="mt-2 flex items-baseline gap-2">
         <span className="text-lg font-semibold">{currency(price)}</span>
-        <span className="text-sm text-gray-500 line-through">{currency(mrp)}</span>
+        <span className="text-sm text-gray-500 line-through">
+          {currency(mrp)}
+        </span>
       </div>
 
       <p className="mt-1 text-xs text-gray-600">Save extra with No Cost EMI</p>
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
       <div className="mt-4 flex justify-center">
-  <button className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
-    Add to cart
-  </button>
-</div>
-
+        <button className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
+          Add to cart
+        </button>
+      </div>
     </div>
   );
 }
-

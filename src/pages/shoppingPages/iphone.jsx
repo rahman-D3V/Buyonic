@@ -8,13 +8,29 @@ const currency = (n) =>
 
 export default function Iphone() {
   const [instantFilter, setInstantFilter] = useState(null);
+  const [sort, setSort] = useState("");
 
+
+  // Get the updated product list after filtering and sorting
   const filteredProducts = useMemo(() => {
-    if (!instantFilter) return iphoneData;
-    return iphoneData.filter(
-      (item) => item.storage === instantFilter || item.color == instantFilter
-    );
-  }, [instantFilter]);
+    let copy = structuredClone(iphoneData);
+    
+    if (instantFilter) {
+      copy = copy.filter(
+        (item) => item.storage === instantFilter || item.color == instantFilter
+      );
+    }
+
+    if (sort === "low-high") {
+      copy.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-low") {
+      copy.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating") {
+      copy.sort((a, b) => b.rating - a.rating);
+    }
+
+    return copy;
+  }, [instantFilter, sort]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -33,17 +49,27 @@ export default function Iphone() {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => setSort("relevance")}
             className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
           >
             <FiSliders /> Relevance
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("low-high")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · Low to High
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("high-low")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · High to Low
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("rating")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Customer Rating
           </button>
         </div>
@@ -80,7 +106,7 @@ export default function Iphone() {
 
       {/* Products*/}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((p) => (
+        {filteredProducts?.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>

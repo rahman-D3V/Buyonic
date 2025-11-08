@@ -151,7 +151,7 @@ export const iphoneData = [
     title: "Apple iPhone 14 (Blue, 128 GB)",
     image:
       "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg",
-    price: 45999,
+    price: 58990,
     mrp: 69999,
     rating: 4.2,
     ratingCount: 12.8,

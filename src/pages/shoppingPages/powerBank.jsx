@@ -1,21 +1,28 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
-import {
-  iphoneData,
-  laptopsData,
-  monitorData,
-  powerBankData,
-} from "../../data";
+import { powerBankData } from "../../data";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
-
-
 export default function PowerBank() {
-  
+  const [sort, setSort] = useState("");
 
+  // Get the updated product list after sorting
+  const filteredProducts = useMemo(() => {
+    let copy = structuredClone(powerBankData);
+
+    if (sort === "low-high") {
+      copy.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-low") {
+      copy.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating") {
+      copy.sort((a, b) => b.rating - a.rating);
+    }
+
+    return copy;
+  }, [sort]);
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Breadcrumbs */}
@@ -33,17 +40,27 @@ export default function PowerBank() {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => setSort("relevance")}
             className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
           >
             <FiSliders /> Relevance
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("low-high")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · Low to High
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("high-low")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Price · High to Low
           </button>
-          <button className={`rounded-xl border px-3 py-2`}>
+          <button
+            onClick={() => setSort("rating")}
+            className={`rounded-xl border px-3 py-2`}
+          >
             Customer Rating
           </button>
         </div>
@@ -51,7 +68,7 @@ export default function PowerBank() {
 
       {/* Products*/}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {powerBankData.map((p) => (
+        {filteredProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
