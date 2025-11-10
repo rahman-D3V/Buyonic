@@ -3,6 +3,8 @@ import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
 import { iphoneData } from "../../data";
 import { EncryptedText } from "../../components/ui/encrypted-text";
+import { useCart } from "../../stores/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
@@ -11,11 +13,13 @@ export default function Iphone() {
   const [instantFilter, setInstantFilter] = useState(null);
   const [sort, setSort] = useState("");
 
+  const addToCart = useCart((s) => s.addToCart);
+  const navigate = useNavigate();
 
   // Get the updated product list after filtering and sorting
   const filteredProducts = useMemo(() => {
     let copy = structuredClone(iphoneData);
-    
+
     if (instantFilter) {
       copy = copy.filter(
         (item) => item.storage === instantFilter || item.color == instantFilter
@@ -37,7 +41,10 @@ export default function Iphone() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Breadcrumbs */}
       <nav className="mb-5 flex items-center text-sm text-gray-600">
-        <a href="/" className="hover:underline">
+        <a
+          onClick={() => navigate("/")}
+          className="hover:underline cursor-pointer"
+        >
           Home
         </a>
         <FiChevronRight className="mx-2" />
@@ -108,15 +115,15 @@ export default function Iphone() {
       {/* Products*/}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filteredProducts?.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <ProductCard addToCart={addToCart} key={p.id} product={p} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product }) {
-  const { title, image, price, mrp, rating, ratingCount, deliveryEta } =
+function ProductCard({ product, addToCart }) {
+  const { id,title, image, price, mrp, rating, ratingCount, deliveryEta } =
     product;
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
@@ -147,14 +154,13 @@ function ProductCard({ product }) {
 
       <div className="mt-2 flex items-baseline gap-2">
         <span className="text-lg font-semibold">
-        
-                <EncryptedText
-                text={currency(price)}
-                encryptedClassName="text-neutral-500"
-                revealedClassName="text-black"
-                revealDelayMs={75}
-              />
-                </span>
+          <EncryptedText
+            text={currency(price)}
+            encryptedClassName="text-neutral-500"
+            revealedClassName="text-black"
+            revealDelayMs={75}
+          />
+        </span>
         <span className="text-sm text-gray-500 line-through">
           {currency(mrp)}
         </span>
@@ -164,7 +170,12 @@ function ProductCard({ product }) {
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
       <div className="mt-4 flex justify-center">
-        <button className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
+        <button
+          onClick={() =>
+            addToCart({ title, price, image, rating, deliveryEta, id })
+          }
+          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
+        >
           Add to cart
         </button>
       </div>

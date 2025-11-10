@@ -3,12 +3,17 @@ import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
 import { powerBankData } from "../../data";
 import { EncryptedText } from "../../components/ui/encrypted-text";
+import { useCart } from "../../stores/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
 export default function PowerBank() {
   const [sort, setSort] = useState("");
+
+  const addToCart = useCart((s) => s.addToCart);
+  const navigate = useNavigate();
 
   // Get the updated product list after sorting
   const filteredProducts = useMemo(() => {
@@ -28,7 +33,10 @@ export default function PowerBank() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Breadcrumbs */}
       <nav className="mb-5 flex items-center text-sm text-gray-600">
-        <a href="/" className="hover:underline">
+        <a
+          onClick={() => navigate("/")}
+          className="hover:underline cursor-pointer"
+        >
           Home
         </a>
         <FiChevronRight className="mx-2" />
@@ -70,15 +78,15 @@ export default function PowerBank() {
       {/* Products*/}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filteredProducts.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <ProductCard addToCart={addToCart} key={p.id} product={p} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product }) {
-  const { title, image, price, mrp, rating, ratingCount, deliveryEta } =
+function ProductCard({ product, addToCart }) {
+  const { id, title, image, price, mrp, rating, ratingCount, deliveryEta } =
     product;
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
@@ -115,7 +123,7 @@ function ProductCard({ product }) {
 
       <div className="mt-2 flex items-baseline gap-2">
         <span className="text-lg font-semibold">
-          <EncryptedText  
+          <EncryptedText
             text={currency(price)}
             encryptedClassName="text-neutral-500"
             revealedClassName="text-black"
@@ -131,7 +139,12 @@ function ProductCard({ product }) {
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
       <div className="mt-4 flex gap-2">
-        <button className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
+        <button
+          onClick={() =>
+            addToCart({ title, price, image, rating, deliveryEta, id })
+          }
+          className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
+        >
           Add to cart
         </button>
         <button className="rounded-xl border px-4 py-2 text-sm">Buy now</button>

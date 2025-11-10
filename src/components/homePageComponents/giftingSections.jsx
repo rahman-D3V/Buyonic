@@ -1,7 +1,10 @@
 import React from "react";
 import { gifting } from "../../data";
+import { useCart } from "../../stores/cartStore";
 
 const GiftingSections = () => {
+  const addToCart = useCart((s) => s.addToCart);
+
   return (
     <>
       <div className="bg-white p-6">
@@ -13,33 +16,48 @@ const GiftingSections = () => {
           className="flex overflow-x-auto gap-2 px-6  "
           style={{ scrollbarWidth: "none" }}
         >
-          {gifting.map((item) => (
-            <div
-              key={item.id}
-              className="shrink-0 w-72 cursor-pointer group bg-[#f1f3f6e8] p-1 pb-2"
-            >
-              <div className="relative w-full h-96 bg-gray-50">
-                <img
-                  src={item.img1}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:hidden"
-                />
-                <img
-                  src={item.img2}
-                  alt={item.name}
-                  className="w-full h-full object-cover absolute top-0 left-0 hidden group-hover:block"
-                />
-                <button className="hidden group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]">
-                  ADD TO BAG
-                </button>
-              </div>
+          {gifting.map((item) => {
+            const { id, name, img1, price, deliveryEta, rating } = item;
+            return (
+              <div
+                key={item.id}
+                className="shrink-0 w-72 cursor-pointer group bg-[#f1f3f6e8] p-1 pb-2"
+              >
+                <div className="relative w-full h-96 bg-gray-50">
+                  <img
+                    src={item.img1}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:hidden"
+                  />
+                  <img
+                    src={item.img2}
+                    alt={item.name}
+                    className="w-full h-full object-cover absolute top-0 left-0 hidden group-hover:block"
+                  />
+                  <button
+                    onClick={() =>
+                      addToCart({
+                        id,
+                        title: name,
+                        image: img1,
+                        price,
+                        deliveryEta,
+                        rating,
+                      })
+                    }
+                    className="hidden group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]"
+                  >
+                    ADD TO BAG
+                  </button>
+                </div>
 
-              <div className="mt-3 space-y-1">
-                <p className="text-sm font-semibold">{item.name}</p>
-                <p className="text-base font-bold">{item.price}</p>
+                <div className="mt-3 space-y-1">
+                  <p className="text-sm font-semibold">{item.name}</p>
+                  <p className="text-base font-bold">₹{item.price}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>

@@ -3,12 +3,17 @@ import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
 import { winterData } from "../../data";
 import { EncryptedText } from "../../components/ui/encrypted-text";
+import { useCart } from "../../stores/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
 export default function WinterCollection() {
   const [sort, setSort] = useState("");
+
+  const addToCart = useCart((s) => s.addToCart);
+  const navigate = useNavigate();
 
   // Get the updated product list after filtering and sorting
   const filteredProducts = useMemo(() => {
@@ -72,15 +77,16 @@ export default function WinterCollection() {
       {/* Products*/}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filteredProducts.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <ProductCard addToCart={addToCart} key={p.id} product={p} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   const {
+    id,
     title,
     image1,
     image2,
@@ -128,13 +134,12 @@ function ProductCard({ product }) {
 
       <div className="mt-2 flex items-baseline gap-2">
         <span className="text-lg font-semibold">
-
-        <EncryptedText
-        text={currency(price)}
-        encryptedClassName="text-neutral-500"
-        revealedClassName="text-black"
-        revealDelayMs={75}
-      />
+          <EncryptedText
+            text={currency(price)}
+            encryptedClassName="text-neutral-500"
+            revealedClassName="text-black"
+            revealDelayMs={75}
+          />
         </span>
         <span className="text-sm text-gray-500 line-through">
           {currency(mrp)}
@@ -145,7 +150,12 @@ function ProductCard({ product }) {
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
       <div className="mt-4 flex justify-center">
-        <button className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
+        <button
+          onClick={() =>
+            addToCart({ title, price, image: image1, rating, deliveryEta, id })
+          }
+          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
+        >
           Add to cart
         </button>
       </div>

@@ -2,12 +2,17 @@ import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
 import { eyeglassesData } from "../../data";
+import { useCart } from "../../stores/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
 export default function EyeGlasses() {
   const [sort, setSort] = useState("");
+
+  const addToCart = useCart((s) => s.addToCart);
+  const navigate = useNavigate();
 
   // Get the updated product list after sorting
   const filteredProducts = useMemo(() => {
@@ -26,7 +31,10 @@ export default function EyeGlasses() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <nav className="mb-5 flex items-center text-sm text-gray-600">
-        <a href="/" className="hover:underline">
+        <a
+          onClick={() => navigate("/")}
+          className="hover:underline cursor-pointer"
+        >
           Home
         </a>
         <FiChevronRight className="mx-2" />
@@ -67,16 +75,22 @@ export default function EyeGlasses() {
 
       {/* Products  */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((p) => (
-          <ProductCard key={p.id} product={p} />
+        {filteredProducts.map((p, index) => (
+          <ProductCard
+            addToCart={addToCart}
+            key={p.id}
+            product={p}
+            index={index}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart, index }) {
   const {
+    id,
     title,
     image1,
     image2,
@@ -138,7 +152,12 @@ function ProductCard({ product }) {
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
       <div className="mt-4 flex gap-2">
-        <button className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95">
+        <button
+          onClick={() =>
+            addToCart({ title, price, image: image1, rating, deliveryEta, id })
+          }
+          className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
+        >
           Add to cart
         </button>
         <button className="rounded-xl border px-4 py-2 text-sm">Buy now</button>

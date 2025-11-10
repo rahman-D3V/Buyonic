@@ -4,6 +4,7 @@ import { FaShopify } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { Router, useNavigate } from "react-router-dom";
 import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
+import { useCart } from "../stores/cartStore";
 
 const placeholders = [
   "Search for products…",
@@ -15,6 +16,10 @@ const placeholders = [
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const cartItems = useCart((s) => s.items)
+  console.log(cartItems);
+  
 
   return (
     <div>
@@ -54,11 +59,11 @@ const Navbar = () => {
           </div>
 
           {/* Cart */}
-          <div className="relative cursor-pointer group">
+          <div onClick={() => navigate("/cart")} className="relative cursor-pointer group">
             <div className="bg-gray-50 border border-gray-200 p-3.5 rounded-xl hover:border-slate-400 hover:bg-white transition-all duration-300">
               <FaCartShopping className="text-gray-700 text-xl" />
               <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-red-600 text-white h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold shadow-md">
-                {10}
+                {cartItems?.length}
               </div>
             </div>
           </div>

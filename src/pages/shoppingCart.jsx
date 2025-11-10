@@ -1,213 +1,188 @@
-// import React, { useMemo, useState } from "react";
-// import {
-//   FiTrash2,
-//   FiMinus,
-//   FiPlus,
-//   FiTag,
-//   FiShoppingBag,
-//   FiArrowLeft,
-// } from "react-icons/fi";
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../stores/cartStore";
 
-// const currency = (n) => Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
+const currency = (n) =>
+  Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
 
+export default function CartPage() {
+  const items = useCart((s) => s.items);
+  const removeFromCart = useCart((s) => s.removeFromCart);
+  const clearCart = useCart((s) => s.clearCart);
 
-// const INITIAL_ITEMS = [
-//   {
-//     id: "1",
-//     title: "Casual Hoodie",
-//     variant: "Blue / M",
-//     price: 1499,
-//     image:
-//       "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=600",
-//     qty: 1,
-//   },
-//   {
-//     id: "2",
-//     title: "Running Shoes",
-//     variant: "Black / 9 UK",
-//     price: 2799,
-//     image:
-//       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600",
-//     qty: 2,
-//   },
-// ];
+  const navigate = useNavigate();
 
-// export default function Cart() {
-//   const [items, setItems] = useState(INITIAL_ITEMS);
-//   const [coupon, setCoupon] = useState("");
+  const [express, setExpress] = useState(false);
 
-//   const subTotal = useMemo(
-//     () => items.reduce((s, it) => s + it.price * it.qty, 0),
-//     [items]
-//   );
+  const subtotal = useMemo(() => {
+    return items.reduce(
+      (acc, item) => acc + (item.price || 0) * (item.quantity || 1),
+      0
+    );
+  }, [items]);
 
-//   // tweak these rules as you like
-//   const discount = useMemo(() => (coupon.toUpperCase() === "BUYONIC10" ? subTotal * 0.1 : 0), [coupon, subTotal]);
-//   const shipping = useMemo(() => (subTotal > 1999 ? 0 : items.length ? 79 : 0), [subTotal, items.length]);
-//   const tax = useMemo(() => subTotal * 0.05, [subTotal]); // GST approx for demo
-//   const grandTotal = Math.max(subTotal - discount + shipping + tax, 0);
+  const shippingFee = subtotal > 999 || subtotal === 0 ? 0 : 49;
 
-//   const updateQty = (id, delta) =>
-//     setItems((prev) =>
-//       prev
-//         .map((it) => (it.id === id ? { ...it, qty: Math.max(1, it.qty + delta) } : it))
-//     );
+  const expressCharge = express && subtotal > 0 ? 39 : 0;
 
-//   const removeItem = (id) => setItems((prev) => prev.filter((it) => it.id !== id));
+  const taxes = +(subtotal * 0.025).toFixed(2); // 2.5% tax
 
-//   const applyCoupon = (e) => {
-//     e.preventDefault();
-//     // plug your API/validation here
-//   };
+  const total = +(subtotal + shippingFee + expressCharge + taxes).toFixed(2);
 
-//   if (items.length === 0) {
-//     return (
-//       <div className="max-w-6xl mx-auto px-4 py-16">
-//         <div className="rounded-2xl border bg-white p-12 text-center shadow-sm">
-//           <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-//             <FiShoppingBag className="h-6 w-6" />
-//           </div>
-//           <h1 className="text-2xl font-semibold">Your cart is empty</h1>
-//           <p className="mt-2 text-gray-600">Add items and they’ll show up here.</p>
-//           <a
-//             href="/"
-//             className="mt-6 inline-flex items-center gap-2 rounded-xl bg-black px-5 py-3 text-white"
-//           >
-//             <FiArrowLeft /> Continue shopping
-//           </a>
-//         </div>
-//       </div>
-//     );
-//   }
+  if (!items || items.length === 0) {
+    return (
+      <main className="max-w-4xl mx-auto px-4 py-12 text-center">
+        <img
+          src="https://maloosgourmet.com/img/empty_cart.gif"
+          className="mx-auto mb-6 w-48 h-48 object-contain"
+          alt="Empty cart"
+        />
+        <p className="mb-4 text-gray-600">
+          Your cart is empty. Add some goodies!
+        </p>
+        <button
+          onClick={() => navigate("/")}
+          className="px-5 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-shadow"
+        >
+          CONTINUE SHOPPING
+        </button>
+      </main>
+    );
+  }
 
-//   return (
-//     <div className="max-w-6xl mx-auto px-4 py-10">
-//       <h1 className="mb-6 text-2xl font-semibold">Shopping Cart ({items.length})</h1>
-
-//       <div className="grid gap-6 lg:grid-cols-3">
-//         {/* Items */}
-//         <div className="lg:col-span-2 space-y-4">
-//           {items.map((it) => (
-//             <div
-//               key={it.id}
-//               className="flex items-center gap-4 rounded-2xl border bg-white p-4 shadow-sm"
-//             >
-//               <img
-//                 src={it.image}
-//                 alt={it.title}
-//                 className="h-24 w-24 rounded-xl object-cover"
-//               />
-
-//               <div className="flex-1">
-//                 <div className="flex items-start justify-between gap-3">
-//                   <div>
-//                     <h3 className="font-medium">{it.title}</h3>
-//                     <p className="text-sm text-gray-600">{it.variant}</p>
-//                   </div>
-//                   <button
-//                     onClick={() => removeItem(it.id)}
-//                     className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
-//                     aria-label="Remove item"
-//                   >
-//                     <FiTrash2 />
-//                   </button>
-//                 </div>
-
-//                 <div className="mt-3 flex items-center justify-between">
-//                   <div className="inline-flex items-center rounded-xl border">
-//                     <button
-//                       onClick={() => updateQty(it.id, -1)}
-//                       className="px-3 py-2"
-//                       aria-label="Decrease quantity"
-//                     >
-//                       <FiMinus />
-//                     </button>
-//                     <span className="w-10 text-center">{it.qty}</span>
-//                     <button
-//                       onClick={() => updateQty(it.id, 1)}
-//                       className="px-3 py-2"
-//                       aria-label="Increase quantity"
-//                     >
-//                       <FiPlus />
-//                     </button>
-//                   </div>
-
-//                   <div className="text-right">
-//                     <p className="font-semibold">{currency(it.price * it.qty)}</p>
-//                     <p className="text-sm text-gray-500">₹{it.price} each</p>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Summary */}
-//         <aside className="lg:col-span-1">
-//           <div className="rounded-2xl border bg-white p-5 shadow-sm">
-//             <h2 className="mb-4 text-lg font-semibold">Order Summary</h2>
-
-//             <form onSubmit={applyCoupon} className="mb-4">
-//               <label className="mb-2 block text-sm font-medium">Coupon</label>
-//               <div className="flex gap-2">
-//                 <div className="flex-1 inline-flex items-center gap-2 rounded-xl border px-3">
-//                   <FiTag className="shrink-0" />
-//                   <input
-//                     value={coupon}
-//                     onChange={(e) => setCoupon(e.target.value)}
-//                     placeholder="Enter code (e.g. BUYONIC10)"
-//                     className="h-11 w-full outline-none"
-//                   />
-//                 </div>
-//                 <button
-//                   type="submit"
-//                   className="h-11 rounded-xl bg-black px-4 text-white"
-//                 >
-//                   Apply
-//                 </button>
-//               </div>
-//             </form>
-
-//             <div className="space-y-2 text-sm">
-//               <Row label="Subtotal" value={currency(subTotal)} />
-//               <Row label="Discount" value={`- ${currency(discount)}`} />
-//               <Row label="Shipping" value={shipping === 0 ? "Free" : currency(shipping)} />
-//               <Row label="Tax (est.)" value={currency(tax)} />
-//               <div className="my-3 h-px bg-gray-200" />
-//               <Row label="Total" value={currency(grandTotal)} bold />
-//             </div>
-
-//             <button className="mt-5 w-full rounded-xl bg-blue-600 px-4 py-3 font-medium text-white hover:opacity-95">
-//               Proceed to Checkout
-//             </button>
-
-//             <p className="mt-3 text-center text-xs text-gray-500">
-//               By placing your order, you agree to Buyonic’s Terms & Policies.
-//             </p>
-//           </div>
-//         </aside>
-//       </div>
-//     </div>
-//   );
-// }
-
-// function Row({ label, value, bold }) {
-//   return (
-//     <div className="flex items-center justify-between">
-//       <span className={bold ? "font-semibold" : ""}>{label}</span>
-//       <span className={bold ? "font-semibold" : ""}>{value}</span>
-//     </div>
-//   );
-// }
-
-
-
-
-
-const Cart = () => {
   return (
-    <div>Cart</div>
-  )
-}
+    <main className="max-w-6xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
 
-export default Cart
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        {/* Left */}
+        <section className="lg:col-span-2 space-y-4">
+          {items.map((item) => {
+            const { id, image, title, price, deliveryEta, rating } = item;
+            return (
+              <div
+                key={id}
+                className="flex gap-4 rounded-xl border border-slate-400 hover:shadow-xl bg-white p-4 shadow-sm items-center"
+              >
+                <img
+                  src={image}
+                  alt={title || "product image"}
+                  className="h-24 w-24 rounded-md object-contain bg-gray-50 p-2"
+                />
+
+                <div className="flex-1">
+                  <h3 className="text-sm font-medium">{title}</h3>
+                  <p className="text-sm text-gray-600">{currency(price)}</p>
+                  {deliveryEta && (
+                    <p className="text-xs text-gray-500">
+                      Delivery: {deliveryEta}
+                    </p>
+                  )}
+                  {rating && (
+                    <p className="text-xs text-gray-500">Rating: {rating}</p>
+                  )}
+                </div>
+
+                <div className="flex flex-col items-end gap-2">
+                  <button
+                    onClick={() => removeFromCart(id)}
+                    className="px-3 py-1 text-sm rounded-md border border-slate-400 hover:bg-red-50"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          <div className="flex justify-between items-center mt-2">
+            <button
+              onClick={() => clearCart()}
+              className="px-4 py-2 rounded-md border hover:bg-gray-50"
+            >
+              Clear All
+            </button>
+
+            <button
+              onClick={() => navigate("/")}
+              className="px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </section>
+
+        {/* Right -> cart Summary*/}
+        <aside className="bg-white rounded-xl p-4 shadow-sm sticky top-4 h-fit self-start">
+          <h2 className="text-lg font-medium mb-3">Order Summary</h2>
+
+          <div className="flex justify-between text-sm text-gray-700">
+            <span>Items</span>
+            <span>{items.length}</span>
+          </div>
+
+          <div className="flex justify-between text-sm text-gray-700 mt-2">
+            <span>Subtotal</span>
+            <span>{currency(subtotal)}</span>
+          </div>
+
+          <div className="flex justify-between text-sm text-gray-700 mt-2">
+            <span>Shipping</span>
+            <span>{shippingFee === 0 ? "Free" : currency(shippingFee)}</span>
+          </div>
+
+          <div className="flex justify-between text-sm text-gray-700 mt-2">
+            <span>Taxes (2.5%)</span>
+            <span>{currency(taxes)}</span>
+          </div>
+
+          <div className="mt-3 border-t border-slate-400 pt-3">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={express}
+                onChange={(e) => setExpress(e.target.checked)}
+              />
+              Express delivery (+{currency(39)})
+            </label>
+          </div>
+
+          <div className="mt-4 flex justify-between items-center font-semibold">
+            <span>Total</span>
+            <span>{currency(total)}</span>
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-sm text-gray-700 mb-1">
+              Delivery address
+            </label>
+            <input
+              placeholder="Flat / Building, Street, City, PIN"
+              className="w-full rounded-md border border-slate-400 outline-0 hover:border-slate-500 px-3 py-2 text-sm"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              We will only use this for delivery details.
+            </p>
+          </div>
+
+          <button
+            onClick={() => {
+              // simple demo behaviour: require address to proceed
+              if (!address)
+                return alert("Please enter delivery address before checkout.");
+              // navigate to a checkout page or show a toast - kept simple for demo
+              navigate("/checkout", { state: { total, items, address } });
+            }}
+            className="mt-4 w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
+          >
+            Proceed to Checkout
+          </button>
+
+          <p className="text-xs text-gray-500 mt-3">
+            Estimated delivery: 3-6 business days
+          </p>
+        </aside>
+      </div>
+    </main>
+  );
+}
