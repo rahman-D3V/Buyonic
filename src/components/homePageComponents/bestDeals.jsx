@@ -15,7 +15,7 @@ const BestDeals = () => {
           Best deals on<span className="text-black"><FlipWords words={["iPhone","Gaming Laptop","smart watch","Monitor","Power Banks"]} /></span>
         </h1>
 
-        <div className="flex flex-wrap justify-between gap-6">
+        <div className="flex flex-wrap justify-around gap-6">
           {bestDeals.map((item, i) => (
             <div
               key={i}

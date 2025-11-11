@@ -95,7 +95,7 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-SportsBottlewithStrawLidGSAthleticBurgundyI1B6L_RB6Y_0037_1920x.jpg",
     price: 619,
     deliveryEta: "Tue, 26 Nov",
-    rating: 4.3
+    rating: 4.3,
   },
   {
     id: "X2B",
@@ -104,7 +104,7 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-MidiCrewSock3pkGSCloudPinkGSResetPinkGSRichMaroonI3A6Z_KC48_0126_V1_1080x.jpg?v=1759483652",
     price: 235,
     deliveryEta: "Thu, 28 Nov",
-    rating: 4.5
+    rating: 4.5,
   },
   {
     id: "M9Q",
@@ -113,7 +113,7 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-ANNOTATED_PDP_24294543_1920x.jpg",
     price: 799,
     deliveryEta: "Wed, 27 Nov",
-    rating: 4.7
+    rating: 4.7,
   },
   {
     id: "T6C",
@@ -122,7 +122,7 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-Crew3pk_GothicGFXGSWhiteI1C6Z_WB57_0353_1920x.jpg?v=1752008809",
     price: 199,
     deliveryEta: "Fri, 29 Nov",
-    rating: 4.2
+    rating: 4.2,
   },
   {
     id: "P4R",
@@ -131,7 +131,7 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-BoxerBrief3PKGSBlackGSSilverGreyREP_M_A0083GSWhiteA5A3W_BDGF_0018_1920x.jpg",
     price: 1099,
     deliveryEta: "Sun, 01 Dec",
-    rating: 4.6
+    rating: 4.6,
   },
   {
     id: "Z8N",
@@ -140,17 +140,16 @@ export const gifting = [
     img2: "https://cdn.shopify.com/s/files/1/0156/6146/files/images-ANNOTATED_PDP_24581576_1920x.jpg",
     price: 8499,
     deliveryEta: "Sat, 30 Nov",
-    rating: 4.8
-  }
+    rating: 4.8,
+  },
 ];
-
-
 
 export const iphoneData = [
   {
     id: "I7A",
     title: "Apple iPhone 16 (Teal, 128 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/o/l/2/-original-imahgfmzvanpgncf.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/o/l/2/-original-imahgfmzvanpgncf.jpeg",
     price: 45999,
     mrp: 69900,
     rating: 3.9,
@@ -162,7 +161,8 @@ export const iphoneData = [
   {
     id: "B9X",
     title: "Apple iPhone 14 (Blue, 128 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg",
     price: 58990,
     mrp: 69999,
     rating: 4.2,
@@ -174,7 +174,8 @@ export const iphoneData = [
   {
     id: "T6Q",
     title: "Apple iPhone 16 Pro (Titanium, 256 GB)",
-    image: "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/o/o/9/-original-imahggev6y5zhbjz.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/o/o/9/-original-imahggev6y5zhbjz.jpeg",
     price: 39999,
     mrp: 62789,
     rating: 3.5,
@@ -186,7 +187,8 @@ export const iphoneData = [
   {
     id: "P4M",
     title: "Apple iPhone 15 (Pink, 128 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/a/c/k/-original-imagtc5fuzkvczr7.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/a/c/k/-original-imagtc5fuzkvczr7.jpeg",
     price: 59990,
     mrp: 69999,
     rating: 4.7,
@@ -198,7 +200,8 @@ export const iphoneData = [
   {
     id: "K3B",
     title: "Apple iPhone 16 (Black, 512 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/n/q/h/-original-imahgfmzjj8gtqbc.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/n/q/h/-original-imahgfmzjj8gtqbc.jpeg",
     price: 99990,
     mrp: 110000,
     rating: 4.2,
@@ -210,7 +213,8 @@ export const iphoneData = [
   {
     id: "R5D",
     title: "Apple iPhone 14 (RED, 128 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/r/k/o/-original-imaghx9qtwbnhwvy.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/r/k/o/-original-imaghx9qtwbnhwvy.jpeg",
     price: 35000,
     mrp: 46999,
     rating: 3.9,
@@ -222,7 +226,8 @@ export const iphoneData = [
   {
     id: "C8S",
     title: "Apple iPhone 13 (Blue, 256 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/ktketu80/mobile/2/y/o/iphone-13-mlpk3hn-a-apple-original-imag6vpyur6hjngg.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/ktketu80/mobile/2/y/o/iphone-13-mlpk3hn-a-apple-original-imag6vpyur6hjngg.jpeg",
     price: 59990,
     mrp: 75999,
     rating: 4.9,
@@ -234,7 +239,8 @@ export const iphoneData = [
   {
     id: "M2L",
     title: "Apple iPhone 17 (Mist Blue, 256 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/p/x/y/-original-imahft5gkyd8wcqc.jpeg?",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/p/x/y/-original-imahft5gkyd8wcqc.jpeg?",
     price: 82900,
     mrp: 99990,
     rating: 4.4,
@@ -246,7 +252,8 @@ export const iphoneData = [
   {
     id: "S9K",
     title: "Apple iPhone Air (Space Black, 512 GB)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/r/y/1/-original-imahft57fwtucrsa.jpeg?",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/r/y/1/-original-imahft57fwtucrsa.jpeg?",
     price: 139900,
     mrp: 159900,
     rating: 3.9,
@@ -257,12 +264,13 @@ export const iphoneData = [
   },
 ];
 
-
 export const laptopsData = [
   {
     id: "H5V",
-    title: "HP Victus 15 Intel Core i5 12th Gen 12450H - (8 GB/512 GB SSD/Windows 11 Home)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/j/b/e/-original-imahcd9ja2nvd4jv.jpeg?",
+    title:
+      "HP Victus 15 Intel Core i5 12th Gen 12450H - (8 GB/512 GB SSD/Windows 11 Home)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/j/b/e/-original-imahcd9ja2nvd4jv.jpeg?",
     price: 58599,
     mrp: 75999,
     rating: 4.7,
@@ -275,8 +283,10 @@ export const laptopsData = [
   },
   {
     id: "A9P",
-    title: "Acer Predator Neo Intel Core i7 13th Gen 13700HX - (16 GB/512 GB SSD/Windows 11 Home)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/m/z/c/-original-imahcd9cex9mbznp.jpeg",
+    title:
+      "Acer Predator Neo Intel Core i7 13th Gen 13700HX - (16 GB/512 GB SSD/Windows 11 Home)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/m/z/c/-original-imahcd9cex9mbznp.jpeg",
     price: 102099,
     mrp: 144999,
     rating: 4.8,
@@ -289,8 +299,10 @@ export const laptopsData = [
   },
   {
     id: "N3R",
-    title: "Acer Nitro V AMD Ryzen 5 Hexa Core 6600H - (16 GB/512 GB SSD/Windows 11 Home)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/s/l/3/-original-imahgfdyghgfets8.jpeg",
+    title:
+      "Acer Nitro V AMD Ryzen 5 Hexa Core 6600H - (16 GB/512 GB SSD/Windows 11 Home)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/s/l/3/-original-imahgfdyghgfets8.jpeg",
     price: 61990,
     mrp: 108999,
     rating: 3.7,
@@ -303,8 +315,10 @@ export const laptopsData = [
   },
   {
     id: "V7O",
-    title: "ASUS Vivobook Go 15 OLED, with Backlit Keyboard, AMD Ryzen 3 Quad Core 7320U",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/x/u/b/-original-imahgfdfrdjmhgws.jpeg",
+    title:
+      "ASUS Vivobook Go 15 OLED, with Backlit Keyboard, AMD Ryzen 3 Quad Core 7320U",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/x/u/b/-original-imahgfdfrdjmhgws.jpeg",
     price: 40990,
     mrp: 55900,
     rating: 4.2,
@@ -317,8 +331,10 @@ export const laptopsData = [
   },
   {
     id: "H6R",
-    title: "HP Victus AMD Ryzen 5 Hexa Core 5600H - (16 GB/512 GB SSD/Windows 11 Home)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/r/w/y/-original-imahcd9hkkqxzcs6.jpeg",
+    title:
+      "HP Victus AMD Ryzen 5 Hexa Core 5600H - (16 GB/512 GB SSD/Windows 11 Home)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/r/w/y/-original-imahcd9hkkqxzcs6.jpeg",
     price: 55399,
     mrp: 63628,
     rating: 4.6,
@@ -331,8 +347,10 @@ export const laptopsData = [
   },
   {
     id: "M8T",
-    title: "MSI Thin A15  Intel Core i7 13th Gen 13700HX - (16 GB/1 TB SSD/Windows 11 Home)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/o/j/q/-original-imahgfdyczjhdyt4.jpeg",
+    title:
+      "MSI Thin A15  Intel Core i7 13th Gen 13700HX - (16 GB/1 TB SSD/Windows 11 Home)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/computer/o/j/q/-original-imahgfdyczjhdyt4.jpeg",
     price: 65999,
     mrp: 75999,
     rating: 3.2,
@@ -345,12 +363,13 @@ export const laptopsData = [
   },
 ];
 
-
 export const watchData = [
   {
     id: "R8W",
-    title: "Riva W9 ultra 2 Ultra Big Display Bluetooth with 100+ Sports Mode, IP68",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/h/d/i/49-w92-ultra2-smartwatch-sw142-android-ios-yaaristyle-yes-original-imahfw8gpt97b89d.jpeg",
+    title:
+      "Riva W9 ultra 2 Ultra Big Display Bluetooth with 100+ Sports Mode, IP68",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/h/d/i/49-w92-ultra2-smartwatch-sw142-android-ios-yaaristyle-yes-original-imahfw8gpt97b89d.jpeg",
     price: 949,
     mrp: 1299,
     rating: 4.1,
@@ -362,7 +381,8 @@ export const watchData = [
   {
     id: "N4G",
     title: "Noise Twist Go 1.39'' Display, Bluetooth Calling, Metallic Finish",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/e/g/x/35-306-wrb-sw-twistgo-std-blk-blk-android-ios-noise-yes-original-imah889zcdzvzcuf.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/e/g/x/35-306-wrb-sw-twistgo-std-blk-blk-android-ios-noise-yes-original-imah889zcdzvzcuf.jpeg",
     price: 1499,
     mrp: 4999,
     rating: 4.4,
@@ -373,8 +393,10 @@ export const watchData = [
   },
   {
     id: "F6X",
-    title: "Fastrack Revoltt XR1-1.38 | BT Calling, Fast Charge, 100+ Sports Mode, IP68, Calculator",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/u/q/h/-original-imagx8nhjwxfayhj.jpeg",
+    title:
+      "Fastrack Revoltt XR1-1.38 | BT Calling, Fast Charge, 100+ Sports Mode, IP68, Calculator",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/u/q/h/-original-imagx8nhjwxfayhj.jpeg",
     price: 2600,
     mrp: 2999,
     rating: 3.8,
@@ -385,8 +407,10 @@ export const watchData = [
   },
   {
     id: "G3D",
-    title: "GOBOULT Drift BT Calling HD Display, 140+ Watchface, BT calling Smartwatch",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/e/w/6/-original-imaheeb4qgjf4fpa.jpeg",
+    title:
+      "GOBOULT Drift BT Calling HD Display, 140+ Watchface, BT calling Smartwatch",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/e/w/6/-original-imaheeb4qgjf4fpa.jpeg",
     price: 1499,
     mrp: 2500,
     rating: 4.1,
@@ -397,8 +421,10 @@ export const watchData = [
   },
   {
     id: "F9L",
-    title: "Fire-Boltt Rise Luxe Stainless Steel Luxury, 47mm (1.85) Display, Games, 120+ Sports",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/f/6/p/-original-imahdyxrdswdda7c.jpeg",
+    title:
+      "Fire-Boltt Rise Luxe Stainless Steel Luxury, 47mm (1.85) Display, Games, 120+ Sports",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/f/6/p/-original-imahdyxrdswdda7c.jpeg",
     price: 6500,
     mrp: 7899,
     rating: 4.9,
@@ -409,8 +435,10 @@ export const watchData = [
   },
   {
     id: "A7S",
-    title: "Apple Watch Series 10 GPS 46mm Rose Gold Aluminium with Light Blush Sport Band",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/r/f/l/-original-imah4jndqjx6dzbf.jpeg",
+    title:
+      "Apple Watch Series 10 GPS 46mm Rose Gold Aluminium with Light Blush Sport Band",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/smartwatch/r/f/l/-original-imah4jndqjx6dzbf.jpeg",
     price: 37999,
     mrp: 49999,
     rating: 4.7,
@@ -421,12 +449,13 @@ export const watchData = [
   },
 ];
 
-
 export const monitorData = [
   {
     id: "A6M",
-    title: "Acer Nitro 60.45 cm (24 inch) Full HD LED Backlit IPS Panel with sRGB 99%",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/g/9/9/-original-imahbk3vrnvhvhrn.jpeg",
+    title:
+      "Acer Nitro 60.45 cm (24 inch) Full HD LED Backlit IPS Panel with sRGB 99%",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/g/9/9/-original-imahbk3vrnvhvhrn.jpeg",
     price: 4700,
     mrp: 5500,
     rating: 4.4,
@@ -437,8 +466,10 @@ export const monitorData = [
   },
   {
     id: "M9Q",
-    title: "MarQ by Flipkart 55.88 cm (22 inch) Full HD LED Backlit VA Panel Monitor (Office Monitor)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/w/o/x/-original-imahdt6yqymkzf95.jpeg",
+    title:
+      "MarQ by Flipkart 55.88 cm (22 inch) Full HD LED Backlit VA Panel Monitor (Office Monitor)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/w/o/x/-original-imahdt6yqymkzf95.jpeg",
     price: 5099,
     mrp: 10499,
     rating: 4.1,
@@ -449,8 +480,10 @@ export const monitorData = [
   },
   {
     id: "A5R",
-    title: "Acer 54.61 cm (22 inch) Full HD IPS Panel with sRGB 99%, ENERGY STAR Certified",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/c/n/8/-original-imahf4rbgwtzquxh.jpeg",
+    title:
+      "Acer 54.61 cm (22 inch) Full HD IPS Panel with sRGB 99%, ENERGY STAR Certified",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/c/n/8/-original-imahf4rbgwtzquxh.jpeg",
     price: 5695,
     mrp: 7524,
     rating: 3.5,
@@ -461,8 +494,10 @@ export const monitorData = [
   },
   {
     id: "Z3P",
-    title: "ZEBRONICS Pure Pixel 60.96 cm (24 inch) Full HD VA Panel with 250 nits brightness, HDMI, VGA",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/z/i/6/zeb-ea124-full-hd-24-2024-zeb-ea124-100hz-online-zebronics-original-imahf7v6fvf4w9tr.jpeg",
+    title:
+      "ZEBRONICS Pure Pixel 60.96 cm (24 inch) Full HD VA Panel with 250 nits brightness, HDMI, VGA",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/z/i/6/zeb-ea124-full-hd-24-2024-zeb-ea124-100hz-online-zebronics-original-imahf7v6fvf4w9tr.jpeg",
     price: 12999,
     mrp: 13500,
     rating: 3.9,
@@ -473,8 +508,10 @@ export const monitorData = [
   },
   {
     id: "Z7X",
-    title: "ZEBRONICS 60.96 cm (24 inch) Full HD IPS Panel with 280 Nits Brightness, Built-in Speakers, HDR10, 99% sRGB",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/y/r/3/zeb-igm-101-zeb-n24a-full-hd-24-2024-zeb-igm-101-zeb-n24a-original-imah4baybwhnqbge.jpeg",
+    title:
+      "ZEBRONICS 60.96 cm (24 inch) Full HD IPS Panel with 280 Nits Brightness, Built-in Speakers, HDR10, 99% sRGB",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/monitor/y/r/3/zeb-igm-101-zeb-n24a-full-hd-24-2024-zeb-igm-101-zeb-n24a-original-imah4baybwhnqbge.jpeg",
     price: 7800,
     mrp: 9999,
     rating: 4.8,
@@ -488,8 +525,10 @@ export const monitorData = [
 export const powerBankData = [
   {
     id: "G4B",
-    title: "GOBOULT 20000 mAh 22.5 W Power Bank  (Pure Black, Lithium Polymer, Fast Charging)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/p/x/g/-original-imahecbckxz6vdgp.jpeg?q=70&crop=false",
+    title:
+      "GOBOULT 20000 mAh 22.5 W Power Bank  (Pure Black, Lithium Polymer, Fast Charging)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/p/x/g/-original-imahecbckxz6vdgp.jpeg?q=70&crop=false",
     price: 2500,
     mrp: 3000,
     rating: 3.5,
@@ -498,8 +537,10 @@ export const powerBankData = [
   },
   {
     id: "A3P",
-    title: "Ambrane 10000 mAh 22.5 W Power Bank  (Black, Lithium-ion, Power Delivery 3.0, Quick Charge)",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/p/l/b/-original-imahanfb4wqjt4yg.jpeg",
+    title:
+      "Ambrane 10000 mAh 22.5 W Power Bank  (Black, Lithium-ion, Power Delivery 3.0, Quick Charge)",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/p/l/b/-original-imahanfb4wqjt4yg.jpeg",
     price: 2899,
     mrp: 3219,
     rating: 4.7,
@@ -509,7 +550,8 @@ export const powerBankData = [
   {
     id: "M6C",
     title: "MarQ 10000 mAh 22.5 W Compact Power Ban",
-    image: "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/h/4/k/-original-imahdzpnyxggthuf.jpeg",
+    image:
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/power-bank/h/4/k/-original-imahdzpnyxggthuf.jpeg",
     price: 4599,
     mrp: 5000,
     rating: 3.2,
@@ -517,8 +559,6 @@ export const powerBankData = [
     deliveryEta: "Sun, 23 Nov",
   },
 ];
-
-
 
 export const eyeglassesData = [
   {
@@ -719,4 +759,13 @@ export const winterData = [
     ratingCount: 14,
     deliveryEta: "wed, 24 Nov",
   },
+];
+
+
+export const placeholders = [
+  "Search for products…",
+  "What are you looking for today?",
+  "Explore top deals and new arrivals",
+  "Find your next favorite product",
+  "Type to discover trending items",
 ];

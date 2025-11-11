@@ -1,220 +1,227 @@
-import React, { useState } from "react";
-import SRCH from "../assets/SRCH.png";
-import { FaShopify } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6";
-import { Router, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  FaShopify,
+  FaHeart,
+  FaShoppingCart,
+  FaUser,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
 import { useCart } from "../stores/cartStore";
+import { placeholders } from "../data";
 
-const placeholders = [
-  "Search for products…",
-  "What are you looking for today?",
-  "Explore top deals and new arrivals",
-  "Find your next favorite product",
-  "Type to discover trending items",
-];
-
-const Navbar = () => {
+export default function Navbar() {
   const navigate = useNavigate();
+  const cartItems = useCart((s) => s.items) || [];
+  const cartCount = cartItems.length;
 
-  const cartItems = useCart((s) => s.items)
-  console.log(cartItems);
-  
+  const setIsUserLogin = useCart((s) => s.setIsUserLogin);
+  const isUserLogin = useCart((s) => s.isUserLogin);
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
+  const [name, setName] = useState("");
+
+  function handleInput(e) {
+    setSearchInput(e.target.value);
+  }
+
+  function handleSearch() {
+    const query = searchInput.toLowerCase().trim();
+
+    setTimeout(() => {
+      if (
+        query.includes("iphone") ||
+        query.includes("apple") ||
+        query.includes("phone")
+      ) {
+        navigate("/iphone");
+      } else if (query.includes("gaminglaptop") || query.includes("laptop")) {
+        navigate("/gaminglaptop");
+      } else if (query.includes("watch") || query.includes("smartwatch")) {
+        navigate("/smartwatch");
+      } else if (query.includes("monitor")) {
+        navigate("/monitor");
+      } else if (query.includes("power")) {
+        navigate("/powerbank");
+      } else {
+        navigate("/item-not-found");
+      }
+    }, 800);
+  }
+
+  // Logout handler
+  function handleLogout() {
+    try {
+      const authData = JSON.parse(localStorage.getItem("auth_demo_v1")) || {};
+      authData.isLogin = false;
+      localStorage.setItem("auth_demo_v1", JSON.stringify(authData));
+
+      // ✅ Update both states immediately for instant UI update
+      setIsUserLogin(false);
+      setIsLogin(false);
+      setShowLogout(false);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  }
+
+  // initialize login state  on mount or store change
+  useEffect(() => {
+    const authData = JSON.parse(localStorage.getItem("auth_demo_v1"));
+    if (authData?.isLogin) {
+      setIsLogin(true);
+      setName(authData.name);
+    } else {
+      setIsLogin(false);
+    }
+  }, [isUserLogin]);
 
   return (
-    <div>
-      {/* Main Navbar*/}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-          <div className="flex items-center gap-3 cursor-pointer group">
-            <div className="bg-gradient-to-br from-slate-600 to-slate-700 p-2.5 rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center gap-6 py-4">
+          {/* Left: Brand */}
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => navigate("/")}
+            role="button"
+            aria-label="Go to home"
+          >
+            <div className="bg-gradient-to-br from-slate-600 to-slate-700 p-2.5 rounded-lg shadow-md">
               <FaShopify className="text-white text-2xl" />
             </div>
-            <span className="text-gray-900 text-2xl font-bold tracking-tight">
+            <span className="text-gray-900 text-lg sm:text-2xl font-bold tracking-tight">
               Buyonic
             </span>
           </div>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-2xl mx-12">
-            <div className="relative">
-              {/* <input
-                type="text"
-                placeholder="Search for products..."
-                className="w-full px-6 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder-gray-400 text-sm border border-gray-200 outline-none focus:bg-white focus:border-slate-400 focus:ring-2 focus:ring-slate-200 transition-all duration-300"
-              /> */}
+          {/* Search Input*/}
+          <div className="flex-1 mx-4 hidden sm:block">
+            <div className="max-w-2xl mx-auto">
               <PlaceholdersAndVanishInput
-        placeholders={placeholders}
-        // onChange={handleChange}
-        // onSubmit={onSubmit}
-      />
-              {/* <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-600 hover:bg-slate-700 p-2.5 rounded-lg transition-all duration-300">
-                <img
-                  src={SRCH}
-                  className="h-4 w-4 brightness-0 invert"
-                  alt="Search"
-                />
-              </button> */}
+                onChange={handleInput}
+                onSubmit={handleSearch}
+                placeholders={placeholders}
+              />
             </div>
           </div>
 
-          {/* Cart */}
-          <div onClick={() => navigate("/cart")} className="relative cursor-pointer group">
-            <div className="bg-gray-50 border border-gray-200 p-3.5 rounded-xl hover:border-slate-400 hover:bg-white transition-all duration-300">
-              <FaCartShopping className="text-gray-700 text-xl" />
-              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-red-600 text-white h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold shadow-md">
-                {cartItems?.length}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation Links */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex justify-between items-center">
-            {/* Left Side Navigation */}
-            <div className="flex items-center gap-8 py-4">
-              <div
+          {/* Right side */}
+          <div className="flex items-center gap-3 ml-auto">
+            <nav className="hidden md:flex items-center gap-3 text-sm text-slate-700">
+              <button
                 onClick={() => navigate("/")}
-                className="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
               >
-                <svg
-                  className="w-4 h-4 text-gray-600 group-hover:text-slate-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                <span className="text-gray-700 group-hover:text-slate-700 font-medium text-sm">
-                  Home
-                </span>
-              </div>
-
-              <div className="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
-                <svg
-                  className="w-4 h-4 text-gray-600 group-hover:text-slate-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-                <span className="text-gray-700 group-hover:text-slate-700 font-medium text-sm">
-                  Shop
-                </span>
-                <svg
-                  className="w-3 h-3 text-gray-400 group-hover:text-slate-600 transition-transform group-hover:rotate-180 duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-
-              <div className="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300">
-                <svg
-                  className="w-4 h-4 text-gray-600 group-hover:text-slate-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="text-gray-700 group-hover:text-slate-700 font-medium text-sm">
-                  Cart
-                </span>
-              </div>
-
-              <div
+                Home
+              </button>
+              <button
+                onClick={() => navigate("/shop")}
+                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
+              >
+                Shop
+              </button>
+              <button
+                onClick={() => navigate("/cart")}
+                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
+              >
+                Cart
+              </button>
+              <button
                 onClick={() => navigate("/contact")}
-                className="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
               >
-                <svg
-                  className="w-4 h-4 text-gray-600 group-hover:text-slate-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                Contact
+              </button>
+            </nav>
+
+            <button
+              onClick={() => navigate("/wishlist")}
+              className="hidden md:flex items-center gap-2 px-3 py-2 text-slate-600 hover:text-slate-800 transition rounded-lg"
+              aria-label="Wishlist"
+            >
+              <FaHeart />
+            </button>
+
+            {/* Cart */}
+            <button
+              onClick={() => navigate("/cart")}
+              className="relative bg-gray-50 border border-gray-200 p-2.5 rounded-xl hover:bg-white transition"
+              aria-label="Cart"
+            >
+              <FaShoppingCart className="text-gray-700 text-lg" />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 font-semibold">
+                {cartCount}
+              </span>
+            </button>
+
+            {/* Sign In / User Dropdown */}
+            {isLogin ? (
+              <div className="relative inline-block">
+                <button
+                  onClick={() => setShowLogout((prev) => !prev)}
+                  className="hidden md:inline-flex items-center gap-2 px-4 py-2 
+             bg-white border border-gray-200 text-slate-700 
+             hover:bg-gray-50 hover:shadow-sm 
+             rounded-xl transition-all duration-200"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="text-gray-700 group-hover:text-slate-700 font-medium text-sm">
-                  Contact
-                </span>
+                  <FaUser className="text-slate-600 text-[15px]" />
+                  <span className="text-sm font-medium">{name}</span>
+                </button>
+
+                {showLogout && (
+                  <div
+                    className="absolute right-0 mt-2 w-32 bg-white border border-gray-400
+             rounded-xl shadow-md transition-all duration-200"
+                  >
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-sm text-slate-700 font-medium py-2.5 
+               hover:bg-gray-50 rounded-xl transition-colors duration-150"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
-            </div>
-
-            {/* Right Side Actions */}
-            <div className="flex items-center gap-4 py-4">
-              <div className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-slate-700 cursor-pointer transition-colors duration-300">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-                <span className="text-sm font-medium">Wishlist</span>
-              </div>
-
-              <div className="h-6 w-px bg-gray-200"></div>
-
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+            ) : (
+              <button
+                onClick={() => navigate("/sign-in")}
+                className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg shadow-sm transition"
+              >
+                <FaUser />
                 <span className="text-sm font-medium">Sign In</span>
-              </div>
-            </div>
+              </button>
+            )}
+
+            {/* Mobile View Responsive */}
+            <button
+              className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 transition"
+              onClick={() => setMobileOpen((s) => !s)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? (
+                <FaTimes className="text-lg" />
+              ) : (
+                <FaBars className="text-lg" />
+              )}
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-  );
-};
 
-export default Navbar;
+        {/* Mobile Search input*/}
+        <div className="sm:hidden pb-3">
+          <PlaceholdersAndVanishInput
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholders={placeholders}
+          />
+        </div>
+      </div>
+    </header>
+  );
+}

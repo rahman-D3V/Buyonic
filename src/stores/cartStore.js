@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 export const useCart = create((set) => ({
   items: [],
+  isUserLogin:false,
 
   addToCart: (product) =>
     set((s) => ({
@@ -17,4 +18,6 @@ export const useCart = create((set) => ({
     set(() => ({
       items: [],
     })),
+
+    setIsUserLogin: (value) => set({ isUserLogin: value }),
 }));

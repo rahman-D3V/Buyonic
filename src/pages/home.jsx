@@ -4,7 +4,7 @@ import { BestDeals, GiftingSections, HeroSection, Spectacles, WinterSection } fr
 
 const Home = () => {
   return (
-    <div className="bg-[#f1f3f6] p-1 h-screen">
+    <div className="bg-[#f1f3f6] p-1 h-screen mt-21">
       <HeroSection />
 
       <BestDeals />
