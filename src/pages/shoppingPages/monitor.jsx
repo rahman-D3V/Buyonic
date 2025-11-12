@@ -124,7 +124,7 @@ export default function Monitor() {
 }
 
 function ProductCard({ product, addToCart }) {
-  const { id, title, image, price, mrp, rating, ratingCount, deliveryEta } =
+  const { title, image, price, mrp, rating, ratingCount, deliveryEta } =
     product;
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
@@ -173,7 +173,7 @@ function ProductCard({ product, addToCart }) {
       <div className="mt-4 flex justify-center">
         <button
           onClick={() =>
-            addToCart({ title, price, image, rating, deliveryEta, id })
+            addToCart({ title, price, image, rating, deliveryEta, id:crypto.randomUUID() })
           }
           className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
         >

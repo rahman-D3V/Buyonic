@@ -17,7 +17,7 @@ const GiftingSections = () => {
           style={{ scrollbarWidth: "none" }}
         >
           {gifting.map((item) => {
-            const { id, name, img1, price, deliveryEta, rating } = item;
+            const { name, img1, price, deliveryEta, rating } = item;
             return (
               <div
                 key={item.id}
@@ -37,7 +37,7 @@ const GiftingSections = () => {
                   <button
                     onClick={() =>
                       addToCart({
-                        id,
+                        id: crypto.randomUUID(),
                         title: name,
                         image: img1,
                         price,

@@ -90,7 +90,6 @@ export default function EyeGlasses() {
 
 function ProductCard({ product, addToCart, index }) {
   const {
-    id,
     title,
     image1,
     image2,
@@ -154,7 +153,7 @@ function ProductCard({ product, addToCart, index }) {
       <div className="mt-4 flex gap-2">
         <button
           onClick={() =>
-            addToCart({ title, price, image: image1, rating, deliveryEta, id })
+            addToCart({ title, price, image: image1, rating, deliveryEta, id:crypto.randomUUID() })
           }
           className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
         >

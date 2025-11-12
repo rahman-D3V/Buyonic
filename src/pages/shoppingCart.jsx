@@ -24,14 +24,14 @@ export default function CartPage() {
   const shippingFee = subtotal > 999 || subtotal === 0 ? 0 : 49;
 
   const expressCharge = express && subtotal > 0 ? 39 : 0;
-
+ 
   const taxes = +(subtotal * 0.025).toFixed(2); // 2.5% tax
 
   const total = +(subtotal + shippingFee + expressCharge + taxes).toFixed(2);
 
   if (!items || items.length === 0) {
     return (
-      <main className="max-w-4xl mx-auto px-4 py-12 text-center">
+      <main className="max-w-4xl mx-auto px-4 py-12 text-center pt-24">
         <img
           src="https://maloosgourmet.com/img/empty_cart.gif"
           className="mx-auto mb-6 w-48 h-48 object-contain"
