@@ -761,7 +761,6 @@ export const winterData = [
   },
 ];
 
-
 export const placeholders = [
   "Search for products…",
   "What are you looking for today?",
@@ -769,3 +768,22 @@ export const placeholders = [
   "Find your next favorite product",
   "Type to discover trending items",
 ];
+
+// Navigates the user to a page based on what they searched for
+export const routes = {
+  iphone: "/iphone",
+  apple: "/iphone",
+  phone: "/iphone",
+  gaminglaptop: "/gaminglaptop",
+  laptop: "/gaminglaptop",
+  watch: "/smartwatch",
+  smartwatch: "/smartwatch",
+  monitor: "/monitor",
+  power: "/powerbank",
+  glasses: "/eyeglasses",
+  spectacles: "/eyeglasses",
+  glass: "/eyeglasses",
+  gym: "/wintercollection",
+  workout: "/wintercollection",
+  winter: "/wintercollection",
+};

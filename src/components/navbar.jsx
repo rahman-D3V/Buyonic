@@ -10,7 +10,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
 import { useCart } from "../stores/cartStore";
-import { placeholders } from "../data";
+import { placeholders, routes } from "../data";
+import { FaSpinner } from "react-icons/fa";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function Navbar() {
   const [showLogout, setShowLogout] = useState(false);
   const [name, setName] = useState("");
 
+  const [showLogoutProcess, setProcess] = useState(false);
+
   function handleInput(e) {
     setSearchInput(e.target.value);
   }
@@ -34,23 +37,11 @@ export default function Navbar() {
     const query = searchInput.toLowerCase().trim();
 
     setTimeout(() => {
-      if (
-        query.includes("iphone") ||
-        query.includes("apple") ||
-        query.includes("phone")
-      ) {
-        navigate("/iphone");
-      } else if (query.includes("gaminglaptop") || query.includes("laptop")) {
-        navigate("/gaminglaptop");
-      } else if (query.includes("watch") || query.includes("smartwatch")) {
-        navigate("/smartwatch");
-      } else if (query.includes("monitor")) {
-        navigate("/monitor");
-      } else if (query.includes("power")) {
-        navigate("/powerbank");
-      } else {
-        navigate("/item-not-found");
-      }
+      const matchedRoute =
+        Object.keys(routes).find((key) => query.includes(key)) ||
+        "/item-not-found";
+
+      navigate(routes[matchedRoute] || "/item-not-found");
     }, 800);
   }
 
@@ -61,10 +52,19 @@ export default function Navbar() {
       authData.isLogin = false;
       localStorage.setItem("auth_demo_v1", JSON.stringify(authData));
 
+      setProcess(true);
+      console.log("Logput started");
+
+      setTimeout(() => {
+        setProcess(false);
+        console.log("Logout compelted");
+
+        setIsUserLogin(false);
+        setIsLogin(false);
+        setShowLogout(false);
+      }, 2000);
+
       // ✅ Update both states immediately for instant UI update
-      setIsUserLogin(false);
-      setIsLogin(false);
-      setShowLogout(false);
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -75,9 +75,11 @@ export default function Navbar() {
     const authData = JSON.parse(localStorage.getItem("auth_demo_v1"));
     if (authData?.isLogin) {
       setIsLogin(true);
+      setIsUserLogin(true);
       setName(authData.name);
     } else {
       setIsLogin(false);
+      setIsUserLogin(false);
     }
   }, [isUserLogin]);
 
@@ -156,7 +158,7 @@ export default function Navbar() {
             >
               <FaShoppingCart className="text-gray-700 text-lg" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 font-semibold">
-                {cartCount}
+                {isUserLogin ? cartCount : 0}
               </span>
             </button>
 
@@ -220,6 +222,29 @@ export default function Navbar() {
             onChange={(e) => setSearchInput(e.target.value)}
             placeholders={placeholders}
           />
+        </div>
+      </div>
+
+      {/* This just simulates the logout process to make it feel more realistic */}
+      <div
+        className={`fixed left-1/2 top-6 z-50 -translate-x-1/2 transition-all duration-200 ${
+          showLogoutProcess
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
+          {/* Spinner using react-icons */}
+          <FaSpinner className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
+
+          <div className="text-sm">
+            <div className="font-medium text-slate-900 dark:text-slate-100">
+              Logging out…
+            </div>
+            <div className="text-xs text-slate-500 dark:text-slate-300">
+              Please wait a moment
+            </div>
+          </div>
         </div>
       </div>
     </header>

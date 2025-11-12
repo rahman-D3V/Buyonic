@@ -128,6 +128,17 @@ function ProductCard({ product, addToCart }) {
     product;
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
+  const isUserLogin = useCart((s) => s.isUserLogin);
+    
+      function handleCart(obj) {
+        if (isUserLogin) {
+          addToCart(obj);
+        }
+        else{
+          alert("Please login First")
+        }
+      }
+
   return (
     <div className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:border-gray-400 hover:shadow-md">
       <div className="relative mb-3">
@@ -173,9 +184,16 @@ function ProductCard({ product, addToCart }) {
       <div className="mt-4 flex justify-center">
         <button
           onClick={() =>
-            addToCart({ title, price, image, rating, deliveryEta, id:crypto.randomUUID() })
+            handleCart({
+              title,
+              price,
+              image,
+              rating,
+              deliveryEta,
+              id: crypto.randomUUID(),
+            })
           }
-          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95"
+          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95 active:scale-95 active:bg-slate-700 transition-transform duration-100"
         >
           Add to cart
         </button>

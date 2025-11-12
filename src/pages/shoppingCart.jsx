@@ -29,7 +29,10 @@ export default function CartPage() {
 
   const total = +(subtotal + shippingFee + expressCharge + taxes).toFixed(2);
 
-  if (!items || items.length === 0) {
+  const isUserLogin = useCart((s) => s.isUserLogin);
+  
+
+  if (!items || items.length === 0 || !isUserLogin) {
     return (
       <main className="max-w-4xl mx-auto px-4 py-12 text-center pt-24">
         <img
@@ -38,7 +41,7 @@ export default function CartPage() {
           alt="Empty cart"
         />
         <p className="mb-4 text-gray-600">
-          Your cart is empty. Add some goodies!
+          No items yet. Let’s fill your cart!
         </p>
         <button
           onClick={() => navigate("/")}

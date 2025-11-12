@@ -5,6 +5,16 @@ import { useCart } from "../../stores/cartStore";
 const GiftingSections = () => {
   const addToCart = useCart((s) => s.addToCart);
 
+  const isUserLogin = useCart((s) => s.isUserLogin);
+
+  function handleCart(obj) {
+    if (isUserLogin) {
+      addToCart(obj);
+    } else {
+      alert("Please login First");
+    }
+  }
+
   return (
     <>
       <div className="bg-white p-6">
@@ -18,6 +28,7 @@ const GiftingSections = () => {
         >
           {gifting.map((item) => {
             const { name, img1, price, deliveryEta, rating } = item;
+
             return (
               <div
                 key={item.id}
@@ -36,7 +47,7 @@ const GiftingSections = () => {
                   />
                   <button
                     onClick={() =>
-                      addToCart({
+                      handleCart({
                         id: crypto.randomUUID(),
                         title: name,
                         image: img1,
@@ -45,7 +56,7 @@ const GiftingSections = () => {
                         rating,
                       })
                     }
-                    className="hidden group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]"
+                    className="hidden active:scale-95 group-hover:block absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-2 rounded-full w-[90%]"
                   >
                     ADD TO BAG
                   </button>

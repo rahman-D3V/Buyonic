@@ -1,6 +1,12 @@
 import bg0 from "../assets/bg0.gif";
 import Footer from "../components/Footer";
-import { BestDeals, GiftingSections, HeroSection, Spectacles, WinterSection } from "../components/homePageComponents";
+import {
+  BestDeals,
+  GiftingSections,
+  HeroSection,
+  Spectacles,
+  WinterSection,
+} from "../components/homePageComponents";
 
 const Home = () => {
   return (

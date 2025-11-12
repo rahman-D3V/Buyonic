@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../stores/cartStore";
+import { FaSpinner } from "react-icons/fa";
 
 const AUTH_KEY = "auth_demo_v1"; // localStorage key
 
@@ -14,6 +15,8 @@ const SignIn = () => {
 
   const isUserLogin = useCart((s) => s.isUserLogin);
   const setIsUserLogin = useCart((s) => s.setIsUserLogin);
+
+  const [showSignInProcess, setSignInProcess] = useState(false);
 
   // Sign-in form
   const {
@@ -66,11 +69,16 @@ const SignIn = () => {
       password: data.password,
       isLogin: true,
     };
+    setSignInProcess(true);
     saveAuth(payload);
     setIsUserLogin(true);
-    navigate("/");
+
     setName(payload.name);
     setMessage({ type: "success", text: "Account created and signed in." });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
 
     // clear message after 3s
     setTimeout(() => setMessage(null), 3000);
@@ -90,13 +98,18 @@ const SignIn = () => {
       const auth = JSON.parse(raw);
       if (auth.name === data.name.trim() && auth.password === data.password) {
         // success
+        setSignInProcess(true);
         const next = { ...auth, isLogin: true };
         saveAuth(next);
         setIsUserLogin(true);
-        navigate("/");
+
         setName(next.name);
         setMessage({ type: "success", text: "Signed in successfully." });
         resetSignIn();
+        setTimeout(() => {
+          setSignInProcess(false);
+          navigate("/");
+        }, 2000);
       } else {
         setMessage({ type: "error", text: "Invalid name or password." });
       }
@@ -323,6 +336,29 @@ const SignIn = () => {
 
         <div className="mt-4 text-center text-sm text-gray-600">
           {isUserLogin ? `Signed in as ${name}` : "Not signed in"}
+        </div>
+      </div>
+
+      {/* This just simulates the logout process to make it feel more realistic */}
+      <div
+        className={`fixed left-1/2 top-6 z-50 -translate-x-1/2 transition-all duration-200 ${
+          showSignInProcess
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
+          {/* Spinner using react-icons */}
+          <FaSpinner className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
+
+          <div className="text-sm">
+            <div className="font-medium text-slate-900 dark:text-slate-100">
+              Logging in
+            </div>
+            <div className="text-xs text-slate-500 dark:text-slate-300">
+              Please wait a moment
+            </div>
+          </div>
         </div>
       </div>
     </div>

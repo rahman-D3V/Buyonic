@@ -10,7 +10,7 @@ const BestDeals = () => {
 
   return (
     <>
-      <div className="p-6 bg-white mt-3">
+      <div className="p-6 bg-white mt-3" id="best-deals">
         <h1 className="text-2xl font-semibold mb-6 ml-4">
           Best deals on<span className="text-black"><FlipWords words={["iPhone","Gaming Laptop","smart watch","Monitor","Power Banks"]} /></span>
         </h1>

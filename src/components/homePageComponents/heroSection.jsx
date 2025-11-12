@@ -1,7 +1,5 @@
 import React from "react";
-import bg0 from "../../assets/bg0.gif"
-
-
+import bg0 from "../../assets/bg0.gif";
 
 const HeroSection = ({}) => {
   return (
@@ -27,15 +25,18 @@ const HeroSection = ({}) => {
             </h1>
 
             <div className="mt-8 flex gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold shadow-lg ring-1 ring-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
-                Shop now
-              </button>
               <a
+                href="#best-deals"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold shadow-lg ring-1 ring-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                Shop now
+              </a>
+              {/* <a
                 href="/collections"
                 className="text-white/90 hover:text-white font-semibold px-3 py-3"
               >
                 Browse all →
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
