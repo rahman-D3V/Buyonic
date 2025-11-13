@@ -11,7 +11,7 @@ const GiftingSections = () => {
     if (isUserLogin) {
       addToCart(obj);
     } else {
-      alert("Please login First");
+      alert("Oops! Log in first to start shopping.");
     }
   }
 

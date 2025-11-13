@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../stores/cartStore";
 
@@ -24,13 +24,66 @@ export default function CartPage() {
   const shippingFee = subtotal > 999 || subtotal === 0 ? 0 : 49;
 
   const expressCharge = express && subtotal > 0 ? 39 : 0;
- 
+
   const taxes = +(subtotal * 0.025).toFixed(2); // 2.5% tax
 
   const total = +(subtotal + shippingFee + expressCharge + taxes).toFixed(2);
 
   const isUserLogin = useCart((s) => s.isUserLogin);
-  
+
+  // ---------- Start address autocomplete  ----------
+  const [address, setAddress] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const timerRef = useRef(null);
+
+  const LOCATIONIQ_KEY = "pk.53e1391e43f5f0369bf48cdae2a6b436";
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const q = address?.trim();
+    if (!q || q.length < 2 || q.length > 15) {
+      setSuggestions([]);
+      return;
+    }
+
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(async () => {
+      try {
+        if (!LOCATIONIQ_KEY) {
+          setSuggestions([]);
+          return;
+        }
+
+        const url = `https://api.locationiq.com/v1/autocomplete.php?key=${LOCATIONIQ_KEY}&q=${encodeURIComponent(
+          q
+        )}&limit=6&countrycodes=IN&format=json`;
+
+        const res = await fetch(url);
+        if (!res.ok) {
+          setSuggestions([]);
+          return;
+        }
+        const data = await res.json();
+        const items = (Array.isArray(data) ? data : []).map(
+          (d) => d.display_name
+        );
+        setSuggestions(items);
+      } catch (e) {
+        setSuggestions([]);
+      }
+    }, 300); // debounce kept
+  }, [address, LOCATIONIQ_KEY]);
+
+  const onSelectSuggestion = (s) => {
+    setAddress(s);
+    setSuggestions([]);
+  };
+  // ---------- End address autocomplete ----------
 
   if (!items || items.length === 0 || !isUserLogin) {
     return (
@@ -159,21 +212,48 @@ export default function CartPage() {
             <label className="block text-sm text-gray-700 mb-1">
               Delivery address
             </label>
-            <input
-              placeholder="Flat / Building, Street, City, PIN"
-              className="w-full rounded-md border border-slate-400 outline-0 hover:border-slate-500 px-3 py-2 text-sm"
-            />
+
+            <div className="relative">
+              <input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Flat / Building, Street, City, PIN"
+                className="w-full rounded-md border border-slate-400 outline-0 hover:border-slate-500 px-3 py-2 text-sm"
+              />
+
+              {suggestions.length > 0 && (
+                <ul className="absolute left-0 right-0 bg-white border mt-1 rounded max-h-56 overflow-auto z-50 shadow-sm">
+                  {suggestions.map((s, i) => (
+                    <li
+                      key={i}
+                      onMouseDown={(ev) => {
+                        ev.preventDefault();
+                        onSelectSuggestion(s);
+                      }}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
             <p className="text-xs text-gray-500 mt-1">
               We will only use this for delivery details.
             </p>
+            {!LOCATIONIQ_KEY && (
+              <p className="text-xs text-red-500 mt-1">
+                Autocomplete disabled — set REACT_APP_LOCATIONIQ_KEY in your
+                .env
+              </p>
+            )}
           </div>
 
           <button
             onClick={() => {
-              // simple demo behaviour: require address to proceed
               if (!address)
                 return alert("Please enter delivery address before checkout.");
-              // navigate to a checkout page or show a toast - kept simple for demo
               navigate("/checkout", { state: { total, items, address } });
             }}
             className="mt-4 w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"

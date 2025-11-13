@@ -25,7 +25,7 @@ const Spectacles = () => {
         <div className="md:w-1/2 w-full text-center md:text-left md:pl-16">
           <h1 className="text-4xl md:text-5xl font-semibold leading-snug text-gray-900">
             Explore the{" "}
-            <span className="font-bold"><ColourfulText text="Latest" /></span> eyewear
+            <span className="text-black/65 italic font-extralight">Latest</span> eyewear
             crafted for comfort <br />
             and style.
           </h1>

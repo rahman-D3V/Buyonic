@@ -108,7 +108,7 @@ function ProductCard({ product, addToCart, index }) {
         addToCart(obj);
       }
       else{
-        alert("Please login First")
+        alert("Oops! Log in first to start shopping.")
       }
     }
 
