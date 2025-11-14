@@ -68,6 +68,7 @@ const SignIn = () => {
       email: data.email.trim(),
       password: data.password,
       isLogin: true,
+      isEmailVerified:false
     };
     setSignInProcess(true);
     saveAuth(payload);

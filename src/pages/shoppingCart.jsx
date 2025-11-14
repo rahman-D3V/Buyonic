@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../stores/cartStore";
+import EmailVerificationModalUI from "../components/EmailVerificationModalUI";
+import { sendOtpEmail } from "../utils/emailjs";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
@@ -13,6 +15,12 @@ export default function CartPage() {
   const navigate = useNavigate();
 
   const [express, setExpress] = useState(false);
+
+  const [emailModal, setEmailModal] = useState(false);
+  const [OTP, setOTP] = useState(null);
+  const [userOTPInput, setUserOTPInput] = useState(null);
+  const [wrongOTP, setWrongOTP] = useState(false);
+  const [correctOTP, setCorrectOTP] = useState(false);
 
   const subtotal = useMemo(() => {
     return items.reduce(
@@ -30,6 +38,61 @@ export default function CartPage() {
   const total = +(subtotal + shippingFee + expressCharge + taxes).toFixed(2);
 
   const isUserLogin = useCart((s) => s.isUserLogin);
+
+  function verifyEmailOTP() {
+    // if(!userOTPInput || !OTP){
+    //   return
+    // }
+    if (userOTPInput == OTP) {
+      let userData = {};
+
+      try {
+        userData = JSON.parse(localStorage.getItem("auth_demo_v1")) || {};
+      } catch (error) {
+        console.log("Error reading user data", error);
+      }
+
+      // Save updated user data
+      localStorage.setItem(
+        "auth_demo_v1",
+        JSON.stringify({ ...userData, isEmailVerified: true })
+      );
+
+      setEmailModal(false);
+      setWrongOTP(false);
+      setCorrectOTP(true);
+
+      setTimeout(() => {
+        setCorrectOTP(false);
+      }, 2000);
+    } else {
+      setWrongOTP(true);
+
+      setTimeout(() => {
+        setWrongOTP(false);
+      }, 2500);
+    }
+  }
+
+  function handleCheckout() {
+    try {
+      let userData = JSON.parse(localStorage.getItem("auth_demo_v1"));
+      let isEmailVerified = userData?.isEmailVerified;
+
+      if (!isEmailVerified) {
+        setEmailModal(true);
+
+        const OTP = Math.floor(100000 + Math.random() * 900000);
+        setOTP(OTP);
+        console.log(OTP);
+        return;
+      }
+
+      if (!address)
+        return alert("Please enter delivery address before checkout.");
+      // navigate("/checkout", { state: { total, items, address } });
+    } catch (error) {}
+  }
 
   // ---------- Start address autocomplete  ----------
   const [address, setAddress] = useState("");
@@ -107,7 +170,7 @@ export default function CartPage() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-6xl mx-auto px-4 py-8 pt-24">
       <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -251,11 +314,7 @@ export default function CartPage() {
           </div>
 
           <button
-            onClick={() => {
-              if (!address)
-                return alert("Please enter delivery address before checkout.");
-              navigate("/checkout", { state: { total, items, address } });
-            }}
+            onClick={handleCheckout}
             className="mt-4 w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
           >
             Proceed to Checkout
@@ -266,6 +325,20 @@ export default function CartPage() {
           </p>
         </aside>
       </div>
+      <EmailVerificationModalUI
+        emailModal={emailModal}
+        setUserOTPInput={setUserOTPInput}
+        verifyEmailOTP={verifyEmailOTP}
+        OTP={OTP}
+        setEmailModal={setEmailModal}
+        wrongOTP={wrongOTP}
+      />
+
+      {correctOTP && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium z-50 animate-fadeIn">
+          Email verified successfully!
+        </div>
+      )}
     </main>
   );
 }
