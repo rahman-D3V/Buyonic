@@ -62,9 +62,8 @@ export default function Navbar() {
         setIsUserLogin(false);
         setIsLogin(false);
         setShowLogout(false);
+        navigate("/");
       }, 2000);
-
-      // ✅ Update both states immediately for instant UI update
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -85,25 +84,26 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center gap-6 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Top bar */}
+        <div className="flex items-center justify-between gap-3 sm:gap-6 py-3 sm:py-4">
           {/* Left: Brand */}
           <div
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0 "
             onClick={() => navigate("/")}
             role="button"
             aria-label="Go to home"
           >
-            <div className="bg-gradient-to-br from-slate-600 to-slate-700 p-2.5 rounded-lg shadow-md">
-              <FaShopify className="text-white text-2xl" />
+            <div className="bg-gradient-to-br from-slate-600 to-slate-700 p-2 sm:p-2.5 rounded-lg shadow-md flex-shrink-0">
+              <FaShopify className="text-white text-xl sm:text-2xl" />
             </div>
-            <span className="text-gray-900 text-lg sm:text-2xl font-bold tracking-tight">
+            <span className="text-gray-900 text-base sm:text-2xl font-bold tracking-tight truncate">
               Buyonic
             </span>
           </div>
 
-          {/* Search Input*/}
-          <div className="flex-1 mx-4 hidden sm:block">
+          {/* Search Input - Desktop / Tablet */}
+          <div className="flex-1 mx-2 sm:mx-4 hidden sm:block min-w-0">
             <div className="max-w-2xl mx-auto">
               <PlaceholdersAndVanishInput
                 onChange={handleInput}
@@ -114,66 +114,43 @@ export default function Navbar() {
           </div>
 
           {/* Right side */}
-          <div className="flex items-center gap-3 ml-auto">
-            <nav className="hidden md:flex items-center gap-3 text-sm text-slate-700">
-              <button
-                onClick={() => navigate("/")}
-                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => navigate("/shop")}
-                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
-              >
-                Shop
-              </button>
-              <button
-                onClick={() => navigate("/cart")}
-                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
-              >
-                Cart
-              </button>
+          <div className="flex items-center gap-2 sm:gap-3 ml-2 sm:ml-auto flex-shrink-0">
+            {/* Desktop nav link */}
+            <nav className="hidden md:flex items-center gap-2 sm:gap-3 text-sm text-slate-700">
               <button
                 onClick={() => navigate("/contact")}
-                className="px-3 py-2 rounded-lg hover:bg-gray-50 transition font-medium"
+                className="px-3 py-2 rounded-lg hover:bg-gray-200 transition font-medium cursor-pointer"
               >
                 Contact
               </button>
             </nav>
 
-            <button
-              onClick={() => navigate("/wishlist")}
-              className="hidden md:flex items-center gap-2 px-3 py-2 text-slate-600 hover:text-slate-800 transition rounded-lg"
-              aria-label="Wishlist"
-            >
-              <FaHeart />
-            </button>
-
             {/* Cart */}
             <button
               onClick={() => navigate("/cart")}
-              className="relative bg-gray-50 border border-gray-200 p-2.5 rounded-xl hover:bg-white transition"
+              className="relative bg-gray-50 border cursor-pointer border-gray-200 p-2.5 rounded-xl hover:bg-white transition"
               aria-label="Cart"
             >
               <FaShoppingCart className="text-gray-700 text-lg" />
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 font-semibold">
-                {isUserLogin ? cartCount : 0}
-              </span>
+              {isUserLogin && cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 font-semibold">
+                  {cartCount}
+                </span>
+              )}
             </button>
 
-            {/* Sign In / User Dropdown */}
+            {/* Sign In / User Dropdown (Desktop) */}
             {isLogin ? (
-              <div className="relative inline-block">
+              <div className="relative hidden md:inline-block">
                 <button
                   onClick={() => setShowLogout((prev) => !prev)}
-                  className="hidden md:inline-flex items-center gap-2 px-4 py-2 
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 
              bg-white border border-gray-200 text-slate-700 
              hover:bg-gray-50 hover:shadow-sm 
-             rounded-xl transition-all duration-200"
+             rounded-xl transition-all duration-200 max-w-[150px]"
                 >
                   <FaUser className="text-slate-600 text-[15px]" />
-                  <span className="text-sm font-medium">{name}</span>
+                  <span className="text-sm font-medium truncate">{name}</span>
                 </button>
 
                 {showLogout && (
@@ -201,7 +178,7 @@ export default function Navbar() {
               </button>
             )}
 
-            {/* Mobile View Responsive */}
+            {/* Mobile menu toggle */}
             <button
               className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 transition"
               onClick={() => setMobileOpen((s) => !s)}
@@ -216,16 +193,49 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Search input*/}
-        <div className="sm:hidden pb-3">
-          <PlaceholdersAndVanishInput
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholders={placeholders}
-          />
-        </div>
+        {/* Mobile Menu Content */}
+        {mobileOpen && (
+          <div className="md:hidden border-t border-gray-200 pb-3">
+            <div className="pt-3 flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  navigate("/contact");
+                  setMobileOpen(false);
+                }}
+                className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-gray-50"
+              >
+                Contact
+              </button>
+
+              {isLogin ? (
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-gray-50"
+                >
+                  <FaUser />
+                  <span>Logout</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    navigate("/sign-in");
+                    setMobileOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium bg-slate-600 text-white hover:bg-slate-700"
+                >
+                  <FaUser />
+                  <span>Sign In</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* This just simulates the logout process to make it feel more realistic */}
+      {/* Logout toast */}
       <div
         className={`fixed left-1/2 top-6 z-50 -translate-x-1/2 transition-all duration-200 ${
           showLogoutProcess
@@ -233,15 +243,14 @@ export default function Navbar() {
             : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
       >
-        <div className="flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
-          {/* Spinner using react-icons */}
-          <FaSpinner className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
+        <div className="flex items-center gap-3 rounded-xl bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
+          <FaSpinner className="h-5 w-5 animate-spin text-blue-400" />
 
           <div className="text-sm">
-            <div className="font-medium text-slate-900 dark:text-slate-100">
+            <div className="font-medium text-slate-100">
               Logging out…
             </div>
-            <div className="text-xs text-slate-500 dark:text-slate-300">
+            <div className="text-xs text-slate-300">
               Please wait a moment
             </div>
           </div>

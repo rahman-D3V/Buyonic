@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { FiChevronRight, FiHeart, FiSliders } from "react-icons/fi";
+import { FiChevronRight, FiSliders } from "react-icons/fi";
 import { eyeglassesData } from "../../data";
 import { useCart } from "../../stores/cartStore";
 import { useNavigate } from "react-router-dom";
+import { EncryptedText } from "../../components/ui/encrypted-text";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
@@ -14,7 +15,7 @@ export default function EyeGlasses() {
   const addToCart = useCart((s) => s.addToCart);
   const navigate = useNavigate();
 
-  // Get the updated product list after sorting
+  // Geting the updated product list after sorting
   const filteredProducts = useMemo(() => {
     let copy = structuredClone(eyeglassesData);
 
@@ -29,7 +30,7 @@ export default function EyeGlasses() {
     return copy;
   }, [sort]);
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 sm:pt-34 pt-24">
       <nav className="mb-5 flex items-center text-sm text-gray-600">
         <a
           onClick={() => navigate("/")}
@@ -48,25 +49,33 @@ export default function EyeGlasses() {
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setSort("relevance")}
-            className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
+            className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 ${
+              sort == "relevance" ? "bg-black text-white" : ""
+            }`}
           >
             <FiSliders /> Relevance
           </button>
           <button
             onClick={() => setSort("low-high")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "low-high" ? "bg-black text-white" : ""
+            }`}
           >
             Price · Low to High
           </button>
           <button
             onClick={() => setSort("high-low")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "high-low" ? "bg-black text-white" : ""
+            }`}
           >
             Price · High to Low
           </button>
           <button
             onClick={() => setSort("rating")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "rating" ? "bg-black text-white" : ""
+            }`}
           >
             Customer Rating
           </button>
@@ -75,20 +84,15 @@ export default function EyeGlasses() {
 
       {/* Products  */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((p, index) => (
-          <ProductCard
-            addToCart={addToCart}
-            key={p.id}
-            product={p}
-            index={index}
-          />
+        {filteredProducts.map((p) => (
+          <ProductCard addToCart={addToCart} key={p.id} product={p} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product, addToCart, index }) {
+function ProductCard({ product, addToCart }) {
   const {
     title,
     image1,
@@ -99,21 +103,25 @@ function ProductCard({ product, addToCart, index }) {
     ratingCount,
     deliveryEta,
   } = product;
+
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
-   const isUserLogin = useCart((s) => s.isUserLogin);
-  
-    function handleCart(obj) {
-      if (isUserLogin) {
-        addToCart(obj);
-      }
-      else{
-        alert("Oops! Log in first to start shopping.")
-      }
+  const isUserLogin = useCart((s) => s.isUserLogin);
+  const [loginAlert, setLoginAlert] = useState(false);
+
+  function handleCart(obj) {
+    if (isUserLogin) {
+      addToCart(obj);
+    } else {
+      setLoginAlert(true);
+      setTimeout(() => {
+        setLoginAlert(false);
+      }, 2500);
     }
+  }
 
   return (
-    <div className="group rounded-2xl border bg-white p-4 shadow-sm transition hover:shadow-md">
+    <div className="group rounded-2xl border border-slate-400  bg-white p-4 shadow-sm transition ">
       <div className="relative mb-3">
         <img
           src={image1}
@@ -132,14 +140,6 @@ function ProductCard({ product, addToCart, index }) {
             {off}% off
           </span>
         )}
-
-        <button
-          className="absolute right-2 top-2 rounded-full border bg-white p-2 text-gray-700 hover:bg-gray-50"
-          aria-label="Add to wishlist"
-          title="Add to wishlist"
-        >
-          <FiHeart />
-        </button>
       </div>
 
       <h3 className="line-clamp-2 text-sm font-medium">{title}</h3>
@@ -152,7 +152,14 @@ function ProductCard({ product, addToCart, index }) {
       </div>
 
       <div className="mt-2 flex items-baseline gap-2">
-        <span className="text-lg font-semibold">{currency(price)}</span>
+        <span className="text-lg font-semibold">
+          <EncryptedText
+            text={currency(price)}
+            encryptedClassName="text-neutral-500"
+            revealedClassName="text-black"
+            revealDelayMs={75}
+          />
+        </span>
         <span className="text-sm text-gray-500 line-through">
           {currency(mrp)}
         </span>
@@ -161,7 +168,8 @@ function ProductCard({ product, addToCart, index }) {
       <p className="mt-1 text-xs text-gray-600">Save extra with No Cost EMI</p>
       <p className="text-xs text-gray-600">FREE delivery {deliveryEta}</p>
 
-      <div className="mt-4 flex gap-2">
+      {/* Only Add to Cart */}
+      <div className="mt-4 text-center">
         <button
           onClick={() =>
             handleCart({
@@ -173,13 +181,19 @@ function ProductCard({ product, addToCart, index }) {
               id: crypto.randomUUID(),
             })
           }
-          className="flex-1 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95 active:scale-95 active:bg-blue-700 transition-transform duration-100"
+          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95 active:scale-95 active:bg-slate-700 transition-transform duration-100 cursor-pointer"
         >
           Add to cart
         </button>
-
-        <button className="rounded-xl border px-4 py-2 text-sm">Buy now</button>
       </div>
+
+      {loginAlert && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <div className="bg-red-50 text-red-700 border border-red-200 px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+            Log in first to start shopping
+          </div>
+        </div>
+      )}
     </div>
   );
 }

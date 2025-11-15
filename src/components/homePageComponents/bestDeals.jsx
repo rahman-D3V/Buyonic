@@ -1,9 +1,7 @@
 import React from "react";
 import { bestDeals } from "../../data";
 import { useNavigate } from "react-router-dom";
-import { ContainerTextFlip } from "../ui/container-text-flip";
 import { FlipWords } from "../ui/flip-words";
-
 
 const BestDeals = () => {
   const navigate = useNavigate();
@@ -12,16 +10,26 @@ const BestDeals = () => {
     <>
       <div className="p-6 bg-white mt-3" id="best-deals">
         <h1 className="text-2xl font-semibold mb-6 ml-4">
-          Best deals on<span className="text-black"><FlipWords words={["iPhone","Gaming Laptop","smart watch","Monitor","Power Banks"]} /></span>
+          Best deals on
+          <span className="text-black">
+            <FlipWords
+              words={[
+                "iPhone",
+                "Gaming Laptop",
+                "smart watch",
+                "Monitor",
+                "Power Banks",
+              ]}
+            />
+          </span>
         </h1>
 
-        <div className="flex flex-wrap justify-around gap-6">
+        <div className="flex justify-around gap-6 overflow-x-auto whitespace-nowrap pb-2">
           {bestDeals.map((item, i) => (
             <div
               key={i}
-              className="w-56 bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-300"
+              className="inline-block w-56 bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              {/* Image */}
               <div className="w-full h-40 flex items-center justify-center overflow-hidden">
                 <img
                   src={item.image}

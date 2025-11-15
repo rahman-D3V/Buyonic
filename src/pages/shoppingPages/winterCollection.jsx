@@ -30,7 +30,7 @@ export default function WinterCollection() {
     return copy;
   }, [sort]);
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 sm:pt-34 pt-24">
       {/* Breadcrumbs */}
       <nav className="mb-5 flex items-center text-sm text-gray-600">
         <a href="/" className="hover:underline">
@@ -42,32 +42,40 @@ export default function WinterCollection() {
         </span>
       </nav>
 
-      {/* Header + Sort/Filters */}
+      {/* Header AND Sort/Filters */}
       <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-semibold">Winter Workout Essentials</h1>
 
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setSort("relevance")}
-            className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2`}
+            className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 ${
+              sort == "relevance" ? "bg-black text-white" : ""
+            }`}
           >
             <FiSliders /> Relevance
           </button>
           <button
             onClick={() => setSort("low-high")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "low-high" ? "bg-black text-white" : ""
+            }`}
           >
             Price · Low to High
           </button>
           <button
             onClick={() => setSort("high-low")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "high-low" ? "bg-black text-white" : ""
+            }`}
           >
             Price · High to Low
           </button>
           <button
             onClick={() => setSort("rating")}
-            className={`rounded-xl border px-3 py-2`}
+            className={`rounded-xl border px-3 py-2 ${
+              sort == "rating" ? "bg-black text-white" : ""
+            }`}
           >
             Customer Rating
           </button>
@@ -99,15 +107,18 @@ function ProductCard({ product, addToCart }) {
   const off = Math.max(0, Math.round(((mrp - price) / mrp) * 100));
 
   const isUserLogin = useCart((s) => s.isUserLogin);
-    
-      function handleCart(obj) {
-        if (isUserLogin) {
-          addToCart(obj);
-        }
-        else{
-          alert("Oops! Log in first to start shopping.")
-        }
-      }
+
+  const [loginAlert, setLoginAlert] = useState(false);
+  function handleCart(obj) {
+    if (isUserLogin) {
+      addToCart(obj);
+    } else {
+      setLoginAlert(true);
+      setTimeout(() => {
+        setLoginAlert(false);
+      }, 2500);
+    }
+  }
 
   return (
     <div className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:border-gray-400 hover:shadow-md">
@@ -171,11 +182,18 @@ function ProductCard({ product, addToCart }) {
               id: crypto.randomUUID(),
             })
           }
-          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95 active:scale-95 active:bg-slate-700 transition-transform duration-100"
+          className="w-4/5 rounded-2xl bg-slate-600 px-4 py-2 text-sm font-medium text-white hover:opacity-95 active:scale-95 active:bg-slate-700 transition-transform duration-100 cursor-pointer"
         >
           Add to cart
         </button>
       </div>
+      {loginAlert && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <div className="bg-red-50 text-red-700 border border-red-200 px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+            Log in first to start shopping
+          </div>
+        </div>
+      )}
     </div>
   );
 }

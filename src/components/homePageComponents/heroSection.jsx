@@ -4,18 +4,21 @@ import bg0 from "../../assets/bg0.gif";
 const HeroSection = ({}) => {
   return (
     <>
-      <div className="relative h-[420px] md:h-[560px] overflow-hidden rounded-2xl">
+      <div className="relative h-35 sm:h-[420px]  md:h-[560px] overflow-hidden rounded-2xl">
         <img
           src={bg0}
           alt="Featured collection"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
           loading="eager"
         />
 
-        <div className="absolute inset-0 bg-linear-to-r from-slate-950/80 via-slate-900/40 to-transparent" />
+        {/* Dark  overlay */}
+        <div className="hidden sm:block absolute inset-0 bg-linear-to-r from-slate-950/80 via-slate-900/40 to-transparent" />
 
-        <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-8 flex items-center">
-          <div className="max-w-xl">
+        <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center">
+
+          {/* Hide text + button on very small screens */}
+          <div className="max-w-xl hidden sm:block">
             <span className="inline-block text-xs font-medium tracking-widest text-white/80 uppercase">
               New Season
             </span>
@@ -31,12 +34,6 @@ const HeroSection = ({}) => {
               >
                 Shop now
               </a>
-              {/* <a
-                href="/collections"
-                className="text-white/90 hover:text-white font-semibold px-3 py-3"
-              >
-                Browse all →
-              </a> */}
             </div>
           </div>
         </div>

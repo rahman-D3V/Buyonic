@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../stores/cartStore";
 import EmailVerificationModalUI from "../components/EmailVerificationModalUI";
 import { sendOtpEmail } from "../utils/emailjs";
+import { div, img } from "motion/react-client";
 
 const currency = (n) =>
   Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
@@ -21,6 +22,7 @@ export default function CartPage() {
   const [userOTPInput, setUserOTPInput] = useState(null);
   const [wrongOTP, setWrongOTP] = useState(false);
   const [correctOTP, setCorrectOTP] = useState(false);
+  const [orderConfirm, setOrderConfirm] = useState(false);
 
   const subtotal = useMemo(() => {
     return items.reduce(
@@ -40,9 +42,6 @@ export default function CartPage() {
   const isUserLogin = useCart((s) => s.isUserLogin);
 
   function verifyEmailOTP() {
-    // if(!userOTPInput || !OTP){
-    //   return
-    // }
     if (userOTPInput == OTP) {
       let userData = {};
 
@@ -91,7 +90,16 @@ export default function CartPage() {
       if (!address)
         return alert("Please enter delivery address before checkout.");
       // navigate("/checkout", { state: { total, items, address } });
-    } catch (error) {}
+      setOrderConfirm(true);
+      clearCart();
+      setTimeout(() => {
+        navigate("/");
+        setOrderConfirm(false);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+    se;
   }
 
   // ---------- Start address autocomplete  ----------
@@ -148,6 +156,19 @@ export default function CartPage() {
   };
   // ---------- End address autocomplete ----------
 
+  if (orderConfirm) {
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <img
+        className="h-80"
+        src="https://assets-v2.lottiefiles.com/a/6192c96c-1184-11ee-94d6-87985660cc3b/eKofKHrW1u.gif"
+        alt="order confirmed"
+      />
+    </div>
+  );
+}
+
+
   if (!items || items.length === 0 || !isUserLogin) {
     return (
       <main className="max-w-4xl mx-auto px-4 py-12 text-center pt-24">
@@ -170,7 +191,7 @@ export default function CartPage() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8 pt-24">
+    <main className="max-w-6xl mx-auto px-4 py-8 sm:pt-34 pt-24">
       <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -232,7 +253,7 @@ export default function CartPage() {
         </section>
 
         {/* Right -> cart Summary*/}
-        <aside className="bg-white rounded-xl p-4 shadow-sm sticky top-4 h-fit self-start">
+        <aside className="bg-white rounded-xl p-4 shadow-sm sticky top-30 h-fit self-start">
           <h2 className="text-lg font-medium mb-3">Order Summary</h2>
 
           <div className="flex justify-between text-sm text-gray-700">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../stores/cartStore";
-import { FaSpinner } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 
 const AUTH_KEY = "auth_demo_v1"; // localStorage key
 
@@ -10,6 +10,9 @@ const SignIn = () => {
   const [name, setName] = useState("");
   const [signInModal, setSignInModal] = useState(true); // true = sign-in, false = sign-up
   const [message, setMessage] = useState(null);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordSignUp, setShowPasswordSignUp] = useState(false);
 
   const navigate = useNavigate();
 
@@ -68,7 +71,7 @@ const SignIn = () => {
       email: data.email.trim(),
       password: data.password,
       isLogin: true,
-      isEmailVerified:false
+      isEmailVerified: false,
     };
     setSignInProcess(true);
     saveAuth(payload);
@@ -171,20 +174,30 @@ const SignIn = () => {
                 )}
               </div>
 
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Password
                 </label>
+
                 <input
                   {...registerSignIn("password", {
                     required: "Password is required",
                   })}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   className={`w-full px-4 py-2.5 border rounded-lg outline-none ${
                     errorsSignIn.password ? "border-red-300" : "border-gray-300"
-                  } focus:ring-2 focus:ring-slate-200`}
+                  } focus:ring-2 focus:ring-slate-200 pr-10`}
                   placeholder="Enter your password"
                 />
+
+                {/* Icon */}
+                <span
+                  className="absolute right-3 top-12 -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+
                 {errorsSignIn.password && (
                   <p className="mt-1 text-xs text-red-600">
                     {errorsSignIn.password.message}
@@ -204,7 +217,7 @@ const SignIn = () => {
             <p className="mt-4 text-sm text-center">
               New User:{" "}
               <button
-                className="text-slate-600 underline"
+                className="text-slate-600 underline cursor-pointer"
                 onClick={() => {
                   setSignInModal(false);
                   setMessage(null);
@@ -286,10 +299,11 @@ const SignIn = () => {
                 )}
               </div>
 
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Password
                 </label>
+
                 <input
                   {...registerSignUp("password", {
                     required: "Password is required",
@@ -298,12 +312,20 @@ const SignIn = () => {
                       message: "Password must be at least 5 characters",
                     },
                   })}
-                  type="password"
+                  type={showPasswordSignUp ? "text" : "password"}
                   className={`w-full px-4 py-2.5 border rounded-lg outline-none ${
                     errorsSignUp.password ? "border-red-300" : "border-gray-300"
-                  } focus:ring-2 focus:ring-slate-200`}
+                  } focus:ring-2 focus:ring-slate-200 pr-10`}
                   placeholder="Enter your password"
                 />
+
+                <span
+                  className="absolute right-3 top-12 -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setShowPasswordSignUp((prev) => !prev)}
+                >
+                  {showPasswordSignUp ? <FaEyeSlash /> : <FaEye />}
+                </span>
+
                 {errorsSignUp.password && (
                   <p className="mt-1 text-xs text-red-600">
                     {errorsSignUp.password.message}
@@ -323,7 +345,7 @@ const SignIn = () => {
             <p className="mt-4 text-sm text-center">
               Already User:{" "}
               <button
-                className="text-slate-600 underline"
+                className="text-slate-600 underline cursor-pointer"
                 onClick={() => {
                   setSignInModal(true);
                   setMessage(null);
@@ -348,17 +370,13 @@ const SignIn = () => {
             : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
       >
-        <div className="flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
+        <div className="flex items-center gap-3 rounded-xl bg-slate-800/95 px-4 py-2 shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
           {/* Spinner using react-icons */}
-          <FaSpinner className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
+          <FaSpinner className="h-5 w-5 animate-spin text-blue-400" />
 
           <div className="text-sm">
-            <div className="font-medium text-slate-900 dark:text-slate-100">
-              Logging in
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-300">
-              Please wait a moment
-            </div>
+            <div className="font-medium text-slate-100">Logging in</div>
+            <div className="text-xs text-slate-300">Please wait a moment</div>
           </div>
         </div>
       </div>

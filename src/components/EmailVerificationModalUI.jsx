@@ -14,15 +14,16 @@ export default function EmailVerificationModalUI({
 
   if (!emailModal) return null;
 
+  // Send OTP
   function handleSendOTP() {
     let userName = "";
-
     try {
       let userData = JSON.parse(localStorage.getItem("auth_demo_v1"));
       userName = userData?.name || "";
     } catch (error) {
       alert("Error reading user data");
     }
+
     setSendingOTP(true);
 
     sendOtpEmail({
@@ -30,78 +31,83 @@ export default function EmailVerificationModalUI({
       username: userName,
       otp: OTP,
     })
-      .then(() => {
-        // alert("OTP sent. Check your email.");
-      })
       .catch((err) => {
         console.error("EmailJS error:", err);
         alert("Failed to send OTP. Try again.");
       })
-      .finally(() => {
-        setSendingOTP(false);
-      });
+      .finally(() => setSendingOTP(false));
   }
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
-      <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-xl">
+      <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-xl animate-fadeIn">
+        
         {/* Header */}
-        <div className="mb-5">
+        <div className="mb-5 text-center">
           <h2 className="text-xl font-semibold text-slate-800">
             Verify Your Email
           </h2>
           <p className="text-sm text-slate-500 mt-1">
-            Please verify your email before placing your order.
+            We’ll send a 6-digit OTP to confirm your email.
           </p>
         </div>
 
-        {/* Email Input Section */}
-        <div className="space-y-3 mb-6">
-          <label className="block text-sm text-slate-600">Email Address</label>
+        {/* Email */}
+        <div className="space-y-2 mb-6">
+          <label className="block text-sm text-slate-600 font-medium">
+            Email Address
+          </label>
+
           <input
             type="email"
             placeholder="you@example.com"
-            className="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none transition"
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <button
             onClick={handleSendOTP}
-            className={`w-full bg-emerald-600 text-white py-2 rounded-md font-medium hover:bg-emerald-700 transition ${sendingOTP ? "animate-pulse" : ""}`}
+            className={`
+              w-full py-2.5 rounded-lg font-medium text-white transition-all
+              ${sendingOTP ? "bg-emerald-500 animate-pulse" : "bg-emerald-600 hover:bg-emerald-700"}
+            `}
           >
-            {sendingOTP ? "Sending" : "Send OTP"}
+            {sendingOTP ? "Sending..." : "Send OTP"}
           </button>
         </div>
 
-        {/* OTP Input Section */}
-        <div className="space-y-3">
-          <label className="block text-sm text-slate-600">Enter OTP</label>
+        {/* OTP */}
+        <div className="space-y-2">
+          <label className="block text-sm text-slate-600 font-medium">
+            Enter OTP
+          </label>
+
           <input
             type="text"
             maxLength={6}
             placeholder="••••••"
-            className="w-full border border-slate-300 rounded-md px-3 py-2 text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-center text-lg tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none transition"
             onChange={(e) => setUserOTPInput(e.target.value)}
           />
 
           {wrongOTP && (
-            <p className="text-sm text-red-700 border border-red-300 bg-red-50 px-3 py-2 rounded-md mt-2">
-              Wrong OTP
+            <p className="text-sm text-red-700 border border-red-300 bg-red-50 px-3 py-2 rounded-lg">
+              Wrong OTP. Try again.
             </p>
           )}
 
           <button
-            onClick={() => verifyEmailOTP()}
-            className="w-full bg-emerald-600 text-white py-2 rounded-md font-medium hover:bg-emerald-700 transition"
+            onClick={verifyEmailOTP}
+            className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition"
           >
             Verify Email
           </button>
         </div>
 
-        
+        {/* Cancel */}
         <button
           onClick={() => setEmailModal(false)}
-          className="mt-5 w-full text-center text-slate-500 text-sm hover:text-slate-700"
+          className="mt-6 w-full text-center text-slate-500 text-sm hover:text-slate-700 transition"
         >
           Cancel
         </button>

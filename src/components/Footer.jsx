@@ -1,72 +1,57 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+  const navigate = useNavigate();
+
   return (
-    <footer className="bg-[#f7f8fa] border-t">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-[#f7f8fa] border-t border-gray-200 mt-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10">
+        {/* Layout */}
+        <div className="flex flex-col md:flex-row justify-between gap-8">
+          {/* Left */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Buyonic</h2>
-            <p className="mt-4 text-sm text-gray-600 max-w-xs">
-              Discover products you’ll love with fast delivery and easy returns.
+            <h2 className="text-xl font-bold text-gray-900">Buyonic</h2>
+            <p className="mt-2 text-sm text-gray-600 max-w-xs">
+              Shop smart, fast and easy with a clean, simple experience.
             </p>
 
-            <div className="mt-6 flex items-center gap-4 text-gray-700">
-              <FaInstagram className="text-xl hover:text-black cursor-pointer" />
-              <FaFacebookF className="text-xl hover:text-black cursor-pointer" />
-              <FaTwitter className="text-xl hover:text-black cursor-pointer" />
-              <FaYoutube className="text-xl hover:text-black cursor-pointer" />
+            <div className="mt-4 flex items-center gap-4 text-gray-600">
+              <FaInstagram className="text-lg hover:text-black cursor-pointer" />
+              <FaFacebookF className="text-lg hover:text-black cursor-pointer" />
+              <FaTwitter className="text-lg hover:text-black cursor-pointer" />
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4">Shop</h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li className="hover:text-black cursor-pointer">Men</li>
-              <li className="hover:text-black cursor-pointer">Women</li>
-              <li className="hover:text-black cursor-pointer">Electronics</li>
-              <li className="hover:text-black cursor-pointer">Accessories</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4">Support</h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li className="hover:text-black cursor-pointer">Contact Us</li>
-              <li className="hover:text-black cursor-pointer">FAQ</li>
-              <li className="hover:text-black cursor-pointer">
-                Shipping & Returns
-              </li>
-              <li className="hover:text-black cursor-pointer">Track Order</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4">Stay Updated</h3>
-            <p className="text-sm text-gray-600 mb-3">
-              Subscribe for offers and updates.
-            </p>
-
-            <div className="flex items-center bg-white rounded-lg border overflow-hidden">
-              <input
-                type="email"
-                placeholder="Enter email"
-                className="w-full px-3 py-2 text-sm outline-none"
-              />
-              <button className="bg-blue-600 text-white px-4 py-2 text-sm font-medium hover:bg-blue-700">
-                Subscribe
+          {/* Right */}
+          <div className="flex flex-col items-start md:items-end gap-3">
+            <div className="flex gap-6 text-sm text-gray-600">
+              <button
+                onClick={() => navigate("/")}
+                className="hover:text-black cursor-pointer"
+              >
+                Home
               </button>
+              <button
+                onClick={() => navigate("/cart")}
+                className="hover:text-black cursor-pointer"
+              >
+                Cart
+              </button>
+              <button
+                onClick={() => navigate("/contact")}
+                className="hover:text-black cursor-pointer"
+              >
+                Contact
+              </button>
+              <button className="hover:text-black cursor-pointer">Help</button>
             </div>
-          </div>
-        </div>
 
-        <div className="border-t mt-10 pt-6 text-sm text-gray-600 flex flex-col md:flex-row justify-between">
-          <p>© {new Date().getFullYear()} Buyonic. All rights reserved.</p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <p className="hover:text-black cursor-pointer">Privacy Policy</p>
-            <p className="hover:text-black cursor-pointer">Terms</p>
-            <p className="hover:text-black cursor-pointer">Cookies</p>
+            <p className="text-xs text-gray-500">
+              © {year} Buyonic. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
