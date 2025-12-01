@@ -48,7 +48,7 @@ export default function CartPage() {
       try {
         userData = JSON.parse(localStorage.getItem("auth_demo_v1")) || {};
       } catch (error) {
-        console.log("Error reading user data", error);
+        alert("Error reading user data", error);
       }
 
       // Save updated user data
@@ -83,7 +83,6 @@ export default function CartPage() {
 
         const OTP = Math.floor(100000 + Math.random() * 900000);
         setOTP(OTP);
-        console.log(OTP);
         return;
       }
 
@@ -97,7 +96,7 @@ export default function CartPage() {
         setOrderConfirm(false);
       }, 3000);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
     se;
   }
@@ -157,17 +156,16 @@ export default function CartPage() {
   // ---------- End address autocomplete ----------
 
   if (orderConfirm) {
-  return (
-    <div className="flex justify-center items-center min-h-screen">
-      <img
-        className="h-80"
-        src="https://assets-v2.lottiefiles.com/a/6192c96c-1184-11ee-94d6-87985660cc3b/eKofKHrW1u.gif"
-        alt="order confirmed"
-      />
-    </div>
-  );
-}
-
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <img
+          className="h-80"
+          src="https://assets-v2.lottiefiles.com/a/6192c96c-1184-11ee-94d6-87985660cc3b/eKofKHrW1u.gif"
+          alt="order confirmed"
+        />
+      </div>
+    );
+  }
 
   if (!items || items.length === 0 || !isUserLogin) {
     return (

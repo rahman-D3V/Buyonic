@@ -195,7 +195,7 @@ const SignIn = () => {
                   className="absolute right-3 top-12 -translate-y-1/2 cursor-pointer text-gray-500"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </span>
 
                 {errorsSignIn.password && (
@@ -323,7 +323,7 @@ const SignIn = () => {
                   className="absolute right-3 top-12 -translate-y-1/2 cursor-pointer text-gray-500"
                   onClick={() => setShowPasswordSignUp((prev) => !prev)}
                 >
-                  {showPasswordSignUp ? <FaEyeSlash /> : <FaEye />}
+                  {showPasswordSignUp ?  <FaEye />  : <FaEyeSlash />}
                 </span>
 
                 {errorsSignUp.password && (

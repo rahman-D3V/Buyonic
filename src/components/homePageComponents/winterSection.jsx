@@ -7,7 +7,7 @@ const WinterSection = () => {
 
   return (
     <>
-      <div className="relative mb-20">
+      <div className="relative ">
         <video
           autoPlay
           muted

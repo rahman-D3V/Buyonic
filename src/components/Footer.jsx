@@ -46,7 +46,8 @@ const Footer = () => {
               >
                 Contact
               </button>
-              <button className="hover:text-black cursor-pointer">Help</button>
+              <button 
+              onClick={() => navigate("/contact")} className="hover:text-black cursor-pointer">Help</button>
             </div>
 
             <p className="text-xs text-gray-500">

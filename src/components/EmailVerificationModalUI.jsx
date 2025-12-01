@@ -32,7 +32,6 @@ export default function EmailVerificationModalUI({
       otp: OTP,
     })
       .catch((err) => {
-        console.error("EmailJS error:", err);
         alert("Failed to send OTP. Try again.");
       })
       .finally(() => setSendingOTP(false));
@@ -41,7 +40,6 @@ export default function EmailVerificationModalUI({
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
       <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-xl animate-fadeIn">
-        
         {/* Header */}
         <div className="mb-5 text-center">
           <h2 className="text-xl font-semibold text-slate-800">
@@ -69,7 +67,11 @@ export default function EmailVerificationModalUI({
             onClick={handleSendOTP}
             className={`
               w-full py-2.5 rounded-lg font-medium text-white transition-all
-              ${sendingOTP ? "bg-emerald-500 animate-pulse" : "bg-emerald-600 hover:bg-emerald-700"}
+              ${
+                sendingOTP
+                  ? "bg-emerald-500 animate-pulse"
+                  : "bg-emerald-600 hover:bg-emerald-700"
+              }
             `}
           >
             {sendingOTP ? "Sending..." : "Send OTP"}

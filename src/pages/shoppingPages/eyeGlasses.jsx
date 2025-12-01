@@ -121,7 +121,7 @@ function ProductCard({ product, addToCart }) {
   }
 
   return (
-    <div className="group rounded-2xl border border-slate-400  bg-white p-4 shadow-sm transition ">
+    <div className="group rounded-2xl border border-slate-400 hover:border-slate-600 hover:shadow  bg-white p-4 shadow-sm transition ">
       <div className="relative mb-3">
         <img
           src={image1}

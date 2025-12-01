@@ -53,11 +53,9 @@ export default function Navbar() {
       localStorage.setItem("auth_demo_v1", JSON.stringify(authData));
 
       setProcess(true);
-      console.log("Logput started");
 
       setTimeout(() => {
         setProcess(false);
-        console.log("Logout compelted");
 
         setIsUserLogin(false);
         setIsLogin(false);
@@ -65,7 +63,7 @@ export default function Navbar() {
         navigate("/");
       }, 2000);
     } catch (error) {
-      console.error("Logout failed:", error);
+      // console.error("Logout failed:", error);
     }
   }
 
@@ -247,12 +245,8 @@ export default function Navbar() {
           <FaSpinner className="h-5 w-5 animate-spin text-blue-400" />
 
           <div className="text-sm">
-            <div className="font-medium text-slate-100">
-              Logging out…
-            </div>
-            <div className="text-xs text-slate-300">
-              Please wait a moment
-            </div>
+            <div className="font-medium text-slate-100">Logging out…</div>
+            <div className="text-xs text-slate-300">Please wait a moment</div>
           </div>
         </div>
       </div>
