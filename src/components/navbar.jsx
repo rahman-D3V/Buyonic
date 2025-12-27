@@ -159,7 +159,7 @@ export default function Navbar() {
                     <button
                       onClick={handleLogout}
                       className="w-full text-sm text-slate-700 font-medium py-2.5 
-               hover:bg-gray-50 rounded-xl transition-colors duration-150"
+               hover:bg-gray-200 rounded-xl transition-colors duration-150 cursor-pointer"
                     >
                       Logout
                     </button>
@@ -169,7 +169,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => navigate("/sign-in")}
-                className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg shadow-sm transition"
+                className="hidden cursor-pointer md:inline-flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg shadow-sm transition"
               >
                 <FaUser />
                 <span className="text-sm font-medium">Sign In</span>
@@ -211,7 +211,7 @@ export default function Navbar() {
                     setMobileOpen(false);
                     handleLogout();
                   }}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-gray-50"
+                  className="w-fullflex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-gray-50"
                 >
                   <FaUser />
                   <span>Logout</span>

@@ -98,7 +98,6 @@ export default function CartPage() {
     } catch (error) {
       alert(error);
     }
-    se;
   }
 
   // ---------- Start address autocomplete  ----------

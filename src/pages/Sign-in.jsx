@@ -27,6 +27,7 @@ const SignIn = () => {
     handleSubmit: handleSubmitSignIn,
     formState: { errors: errorsSignIn, isSubmitting: isSigningIn },
     reset: resetSignIn,
+    setValue,
   } = useForm({
     defaultValues: { name: "", password: "" },
   });
@@ -36,33 +37,10 @@ const SignIn = () => {
     register: registerSignUp,
     handleSubmit: handleSubmitSignUp,
     formState: { errors: errorsSignUp, isSubmitting: isSigningUp },
+    setValue: setSignUpValue,
   } = useForm({
     defaultValues: { name: "", email: "", password: "" },
   });
-
-  // Load existing auth (if any) on mount
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(AUTH_KEY);
-      if (raw) {
-        const auth = JSON.parse(raw);
-        if (auth?.isLogin) {
-          setIsUserLogin(true);
-          setName(auth.name || "");
-        }
-      }
-    } catch {
-      // ignoring here any parse errors (if any)
-    }
-  }, []);
-
-  function saveAuth(obj) {
-    try {
-      localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
-    } catch {
-      // ignore
-    }
-  }
 
   // Sign-up handler: store credentials and log in the user
   const onSignUp = (data) => {
@@ -124,11 +102,48 @@ const SignIn = () => {
     }
   };
 
+  function handleGuestCredentialsForSignIn() {
+    setValue("name", "Guest");
+    setValue("password", "Guest@123");
+  }
+  function handleGuestCredentialsForSignUp() {
+    setSignUpValue("name", "Guest");
+    setSignUpValue("email", "guest@gmail.com");
+    setSignUpValue("password", "Guest@123");
+  }
+
+  function saveAuth(obj) {
+    try {
+      localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
+    } catch {
+      // ignore
+    }
+  }
+
+  // Load existing auth (if any) on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(AUTH_KEY);
+      if (raw) {
+        const auth = JSON.parse(raw);
+        if (auth?.isLogin) {
+          setIsUserLogin(true);
+          setName(auth.name || "");
+        }
+      }
+    } catch {
+      // ignoring here any parse errors (if any)
+    }
+  }, []);
+
   return (
     <div className="pt-24 min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {signInModal ? (
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+          <div
+            key={"signin"}
+            className="bg-white rounded-2xl shadow-md p-6 border border-gray-100"
+          >
             <h1 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
               Sign In
             </h1>
@@ -214,21 +229,32 @@ const SignIn = () => {
               </button>
             </form>
 
-            <p className="mt-4 text-sm text-center">
-              New User:{" "}
+            <div className="mt-4 text-sm text-center flex justify-around">
               <button
-                className="text-slate-600 underline cursor-pointer"
-                onClick={() => {
-                  setSignInModal(false);
-                  setMessage(null);
-                }}
+                className="px-3 py-1.5 rounded-md cursor-pointer text-sm bg-[#45556c2c] text-black hover:bg-[#45556c51]"
+                onClick={handleGuestCredentialsForSignIn}
               >
-                Sign up
+                Guest Credentials
               </button>
-            </p>
+              <div className="px-3 py-1.5">
+                New User:{" "}
+                <button
+                  className="text-slate-600 underline cursor-pointer"
+                  onClick={() => {
+                    setSignInModal(false);
+                    setMessage(null);
+                  }}
+                >
+                  Sign up
+                </button>
+              </div>
+            </div>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+          <div
+            key={"signup"}
+            className="bg-white rounded-2xl shadow-md p-6 border border-gray-100"
+          >
             <h1 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
               Sign Up
             </h1>
@@ -323,7 +349,7 @@ const SignIn = () => {
                   className="absolute right-3 top-12 -translate-y-1/2 cursor-pointer text-gray-500"
                   onClick={() => setShowPasswordSignUp((prev) => !prev)}
                 >
-                  {showPasswordSignUp ?  <FaEye />  : <FaEyeSlash />}
+                  {showPasswordSignUp ? <FaEye /> : <FaEyeSlash />}
                 </span>
 
                 {errorsSignUp.password && (
@@ -342,18 +368,26 @@ const SignIn = () => {
               </button>
             </form>
 
-            <p className="mt-4 text-sm text-center">
-              Already User:{" "}
+            <div className="mt-4 text-sm text-center flex justify-around">
               <button
-                className="text-slate-600 underline cursor-pointer"
-                onClick={() => {
-                  setSignInModal(true);
-                  setMessage(null);
-                }}
+                className="px-3 py-1.5 rounded-md cursor-pointer text-sm bg-[#45556c2c] text-black hover:bg-[#45556c51]"
+                onClick={handleGuestCredentialsForSignUp}
               >
-                Login
+                Guest Credentials
               </button>
-            </p>
+              <div className="text-sm text-center px-3 py-1.5">
+                Already User:{" "}
+                <button
+                  className="text-slate-600 underline cursor-pointer"
+                  onClick={() => {
+                    setSignInModal(true);
+                    setMessage(null);
+                  }}
+                >
+                  Login
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
